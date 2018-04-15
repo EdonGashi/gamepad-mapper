@@ -1,0 +1,3 @@
+[submodule "src/XInputDotNet"]
+	path = src/XInputDotNet
+	url = https://github.com/speps/XInputDotNet.git
