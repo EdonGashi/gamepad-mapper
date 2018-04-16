@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamepadMapper", "src\GamepadMapper\GamepadMapper.csproj", "{463899F5-3D2A-4436-A1E8-9E3089224C1C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XInputDotNetPure", "src\XInputDotNet\XInputDotNetPure\XInputDotNetPure.csproj", "{952700CD-A384-43A4-AC4B-52256F83836E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XInputInterface", "src\XInputDotNet\XInputInterface\XInputInterface.vcxproj", "{1967D61A-FB64-463C-BB3C-BB6E90FBC76F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamepadMapper", "src\GamepadMapper\GamepadMapper.csproj", "{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Debug|x64.ActiveCfg = Debug|x64
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Debug|x64.Build.0 = Debug|x64
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Debug|x86.ActiveCfg = Debug|x86
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Debug|x86.Build.0 = Debug|x86
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Release|x64.ActiveCfg = Release|x64
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Release|x64.Build.0 = Release|x64
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Release|x86.ActiveCfg = Release|x86
-		{463899F5-3D2A-4436-A1E8-9E3089224C1C}.Release|x86.Build.0 = Release|x86
 		{952700CD-A384-43A4-AC4B-52256F83836E}.Debug|x64.ActiveCfg = Debug|x64
 		{952700CD-A384-43A4-AC4B-52256F83836E}.Debug|x64.Build.0 = Debug|x64
 		{952700CD-A384-43A4-AC4B-52256F83836E}.Debug|x86.ActiveCfg = Debug|x86
@@ -41,6 +33,14 @@ Global
 		{1967D61A-FB64-463C-BB3C-BB6E90FBC76F}.Release|x64.Build.0 = Release|x64
 		{1967D61A-FB64-463C-BB3C-BB6E90FBC76F}.Release|x86.ActiveCfg = Release|Win32
 		{1967D61A-FB64-463C-BB3C-BB6E90FBC76F}.Release|x86.Build.0 = Release|Win32
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Debug|x64.ActiveCfg = Debug|x64
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Debug|x64.Build.0 = Debug|x64
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Debug|x86.ActiveCfg = Debug|x86
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Debug|x86.Build.0 = Debug|x86
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Release|x64.ActiveCfg = Release|x64
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Release|x64.Build.0 = Release|x64
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Release|x86.ActiveCfg = Release|x86
+		{A0E0C124-1FE8-47CB-A530-86B98F8AD57E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

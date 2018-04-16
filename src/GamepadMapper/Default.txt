@@ -1,0 +1,37 @@
+﻿profile "default"
+
+A = map lbutton
+Y = map rbutton
+B = press escape
+X = repeat enter
+DPadLeft = repeat left
+DPadUp = repeat up
+DPadRight = repeat right
+DPadDown = repeat down
+LB = map menu
+RB = mod
+LT = repeat backspace
+RT = repeat space
+Back = press ctrl+alt+tab hold alt+tab
+Start = press winkey hold winkey+d
+LSB = map mbutton
+RSB = press home
+
+mod_A = map lbutton
+mod_Y = map rbutton
+mod_B = press escape
+mod_X = repeat enter
+mod_DPadLeft = press alt+left
+mod_DPadUp = press refresh
+mod_DPadRight = press alt+right
+mod_DPadDown = press command(toggle_profile)
+mod_LB = 
+mod_RB = 
+mod_LT = press command(decrease_sensitivity)
+mod_RT = press command(increase_sensitivity)
+mod_Back = press ctrl+alt+tab hold alt+tab
+mod_Start = press winkey hold winkey+d
+mod_LSB = map mbutton
+mod_RSB = press end
+
+end profile

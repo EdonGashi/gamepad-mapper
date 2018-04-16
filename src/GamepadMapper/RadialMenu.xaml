@@ -1,0 +1,93 @@
+﻿<UserControl
+    x:Class="GamepadMapper.RadialMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    xmlns:local="clr-namespace:GamepadMapper"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="UserControl"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    RenderTransformOrigin="0.5,0.5"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <local:StartAngleConverter x:Key="StartAngleConverter" />
+        <local:EndAngleConverter x:Key="EndAngleConverter" />
+        <Storyboard x:Key="Show">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.EndAngle)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="360">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuarticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.StartAngle)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuarticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Hide">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.StartAngle)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuarticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.EndAngle)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuarticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <Canvas Width="300" Height="300" x:Name="Canvas" RenderTransformOrigin="0.5,0.5">
+        <Canvas.Clip>
+            <EllipseGeometry
+                Center="150,150"
+                RadiusX="150"
+                RadiusY="150" />
+        </Canvas.Clip>
+        <ed:Arc
+            x:Name="MenuCircle"
+            Margin="0"
+            ArcThickness="60"
+            ArcThicknessUnit="Pixel"
+            EndAngle="-60"
+            Fill="#FFE0E0E0"
+            Width ="300"
+            Height="300"
+            StartAngle="-60"
+            Stretch="None"
+            StrokeThickness="0" />
+        <ed:Arc
+            x:Name="Pointer"
+            Margin="0"
+            Width ="300"
+            Height="300"
+            ArcThickness="60"
+            ArcThicknessUnit="Pixel"
+            Fill="#FF30C0FF"
+            Stretch="None"
+            StrokeThickness="0">
+            <ed:Arc.StartAngle>
+                <MultiBinding Converter="{StaticResource StartAngleConverter}">
+                    <Binding ElementName="UserControl" Path="PointerAngle"/>
+                    <Binding ElementName="UserControl" Path="PointerWidth"/>
+                </MultiBinding>
+            </ed:Arc.StartAngle>
+            <ed:Arc.EndAngle>
+                <MultiBinding Converter="{StaticResource EndAngleConverter}">
+                    <Binding ElementName="UserControl" Path="PointerAngle"/>
+                    <Binding ElementName="UserControl" Path="PointerWidth"/>
+                </MultiBinding>
+            </ed:Arc.EndAngle>
+        </ed:Arc>
+    </Canvas>
+</UserControl>
