@@ -5,12 +5,13 @@ namespace GamepadMapper.Input
 {
     public struct FrameDetails
     {
-        public FrameDetails(PlayerIndex playerIndex, Profile profile, DateTime time, double fps, double timeDelta, InputState inputState)
+        public FrameDetails(PlayerIndex playerIndex, Profile profile, DateTime time, double fps, double frameTime, double timeDelta, InputState inputState)
         {
             PlayerIndex = playerIndex;
             Profile = profile;
             Time = time;
             Fps = fps;
+            FrameTime = frameTime;
             TimeDelta = timeDelta;
             InputState = inputState;
         }
@@ -22,6 +23,8 @@ namespace GamepadMapper.Input
         public DateTime Time { get; }
 
         public double Fps { get; }
+
+        public double FrameTime { get; }
 
         public double TimeDelta { get; }
         

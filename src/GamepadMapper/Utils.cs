@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Controls;
 using WindowsInput;
 using WindowsInput.Native;
 using GamepadMapper.Actuators;
 using GamepadMapper.Configuration;
 using GamepadMapper.Handlers;
 using GamepadMapper.Input;
+using GamepadMapper.Menu;
 using Button = GamepadMapper.Input.Button;
 
 namespace GamepadMapper
@@ -38,7 +38,7 @@ namespace GamepadMapper
             return list;
         }
 
-        public static Profile GetDefaultProfile()
+        public static Profile GetDefaultProfile(IMenuController menuController)
         {
             var simulator = new InputSimulator();
 
@@ -71,7 +71,8 @@ namespace GamepadMapper
             var modifiers = new[] { Button.Rb };
 
             var mouseHandler = new MovementHandler(new MouseMovementActuator(simulator.Mouse), new MovementConfiguration());
-            var scrollHandler = new MovementHandler(new MouseScrollActuator(simulator.Mouse), new MovementConfiguration());
+            //var scrollHandler = new MovementHandler(new MouseScrollActuator(simulator.Mouse), new MovementConfiguration());
+            var scrollHandler = new RadialHandler(new MenuPointerActuator(menuController), new RadialConfiguration());
 
             var buttonHandlers = new Dictionary<InputKey, IButtonHandler>
             {
@@ -84,6 +85,7 @@ namespace GamepadMapper
                 [InputKey.DPadUp] = RepeatKey(VirtualKeyCode.UP),
                 [InputKey.DPadRight] = RepeatKey(VirtualKeyCode.RIGHT),
                 [InputKey.DPadDown] = RepeatKey(VirtualKeyCode.DOWN),
+                [InputKey.Lb] = new KeyMapHandler(new MenuVisibilityActuator(menuController)),
                 [InputKey.Lt] = RepeatKey(VirtualKeyCode.BACK),
                 [InputKey.Rt] = RepeatKey(VirtualKeyCode.SPACE),
                 [InputKey.Back] = PressHold(VirtualKeyCode.TAB, ModifierKeys.Control | ModifierKeys.Alt, VirtualKeyCode.TAB, ModifierKeys.Alt),

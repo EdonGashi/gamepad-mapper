@@ -71,6 +71,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actuators\MenuPointerActuator.cs" />
+    <Compile Include="Actuators\MenuVisibilityActuator.cs" />
     <Compile Include="AdditionConverter.cs" />
     <Compile Include="AngleConverter.cs" />
     <Compile Include="Actuators\KeyMapActuator.cs" />
@@ -78,6 +80,8 @@
     <Compile Include="Actuators\MouseScrollActuator.cs" />
     <Compile Include="Actuators\MouseMovementActuator.cs" />
     <Compile Include="Actuators\Types.cs" />
+    <Compile Include="Configuration\RadialConfiguration.cs" />
+    <Compile Include="Handlers\RadialHandler.cs" />
     <Compile Include="Input\AnalogState.cs" />
     <Compile Include="Configuration\DeadzoneConfiguration.cs" />
     <Compile Include="Configuration\RepeatConfiguration.cs" />
@@ -98,6 +102,7 @@
     <Compile Include="Handlers\KeyMapHandler.cs" />
     <Compile Include="Input\Profile.cs" />
     <Compile Include="Input\ThumbStick.cs" />
+    <Compile Include="Menu\MenuController.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RadialMenu.xaml.cs">

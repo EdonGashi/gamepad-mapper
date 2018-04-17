@@ -22,6 +22,7 @@ namespace GamepadMapper.Input
             var lastStart = false;
             var lastFrame = DateTime.Now;
             var skipCycles = 0;
+            var dirtyButtons = new HashSet<Button>();
             while (true)
             {
                 var frameStart = DateTime.Now;
@@ -51,6 +52,25 @@ namespace GamepadMapper.Input
                 connected = true;
 
                 var inputState = InputState.FromGamePadState(state, configuration);
+                if (dirtyButtons.Count != 0)
+                {
+                    // Clear dirty buttons.
+                    foreach (var pair in inputState.ButtonStates)
+                    {
+                        if (pair.Value.IsPressed)
+                        {
+                            continue;
+                        }
+
+                        if (dirtyButtons.Remove(pair.Key))
+                        {
+                            if (dirtyButtons.Count == 0)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 var back = state.Buttons.Back == XInputDotNetPure.ButtonState.Pressed;
                 var start = state.Buttons.Start == XInputDotNetPure.ButtonState.Pressed;
@@ -60,7 +80,8 @@ namespace GamepadMapper.Input
                     {
                         isEnabled = !isEnabled;
                         // Ignore profile for 0.2 seconds after toggling to prevent accidental clicks.
-                        skipCycles = (int)Math.Round(fps / 5d + 1d);
+                        dirtyButtons.Add(Button.Back);
+                        dirtyButtons.Add(Button.Start);
                         profile.ClearState();
                     }
                 }
@@ -76,8 +97,20 @@ namespace GamepadMapper.Input
                     }
                     else
                     {
-                        var frame = new FrameDetails(playerIndex, profile, frameStart, fps, (frameStart - lastFrame).TotalMilliseconds, inputState);
-                        UpdateProfile(profile, inputState, frame);
+                        var frame = new FrameDetails(playerIndex, profile, frameStart, fps, frameTime, (frameStart - lastFrame).TotalMilliseconds, inputState);
+                        UpdateProfile(profile, inputState, frame, dirtyButtons);
+                    }
+                }
+
+                if (false /* TODO: profile changed */)
+                {
+                    dirtyButtons.Clear();
+                    foreach (var pair in inputState.ButtonStates)
+                    {
+                        if (pair.Value.IsPressed)
+                        {
+                            dirtyButtons.Add(pair.Key);
+                        }
                     }
                 }
 
@@ -91,7 +124,7 @@ namespace GamepadMapper.Input
             }
         }
 
-        private static void UpdateProfile(Profile profile, InputState inputState, FrameDetails frame)
+        private static void UpdateProfile(Profile profile, InputState inputState, FrameDetails frame, HashSet<Button> dirtyButtons)
         {
             const int modA = (int)InputKey.ModA;
             var isModifierDown = false;
@@ -117,16 +150,21 @@ namespace GamepadMapper.Input
                     continue;
                 }
 
+                if (dirtyButtons.Contains(pair.Key))
+                {
+                    continue;
+                }
+
                 var button = (InputKey)pair.Key;
                 var modButton = (InputKey)(modA + (int)pair.Key);
                 if (profile.ButtonHandlers.TryGetValue(button, out var buttonHandler))
                 {
-                    buttonHandler.Update(isModifierDown ? nonPressedKey : pair.Value, button, frame);
+                    buttonHandler?.Update(isModifierDown ? nonPressedKey : pair.Value, button, frame);
                 }
 
                 if (profile.ButtonHandlers.TryGetValue(modButton, out var modButtonHandler))
                 {
-                    modButtonHandler.Update(isModifierDown ? pair.Value : nonPressedKey, modButton, frame);
+                    modButtonHandler?.Update(isModifierDown ? pair.Value : nonPressedKey, modButton, frame);
                 }
             }
         }

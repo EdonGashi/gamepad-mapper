@@ -18,7 +18,6 @@ namespace GamepadMapper.Handlers
         {
             if (isPressed)
             {
-                Mapping.Deactivate();
                 if (Mapping is IClearable c)
                 {
                     c.Clear();

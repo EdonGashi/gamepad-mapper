@@ -26,45 +26,45 @@ namespace GamepadMapper
         public RadialMenu()
         {
             InitializeComponent();
-            //var str = "abcdefghijklmnopqrstuvwxyz";
-            //str = "Abcdef";
-            //var icons = new PackIconMaterialKind[]
-            //{
-            //    PackIconMaterialKind.Settings,
-            //    PackIconMaterialKind.VolumeMute,
-            //    PackIconMaterialKind.VolumeHigh,
-            //    PackIconMaterialKind.VolumeLow,
-            //    PackIconMaterialKind.Keyboard,
-            //    PackIconMaterialKind.Windows
-            //};
-            //var rand = new Random();
-            //for (var i = 0; i < str.Length; i++)
-            //{
-            //    var c = str[i];
-            //    var angle = i * 360d / str.Length;
-            //    var rad = angle * Math.PI / 180d;
-            //    //var block = new TextBlock
-            //    //{
-            //    //    Text = c.ToString(),
-            //    //    FontSize=25d,
-            //    //    TextAlignment = TextAlignment.Center
-            //    //};
-            //    var block = new PackIconMaterial
-            //    {
-            //        Kind = icons[i],
-            //        Width = 36d,
-            //        Height = 36d,
-            //        Foreground = new SolidColorBrush(Color.FromRgb(64, 64, 64))
-            //    };
+            var str = "abcdefghijklmnopqrstuvwxyz";
+            str = "Abcdef";
+            var icons = new PackIconMaterialKind[]
+            {
+                PackIconMaterialKind.Settings,
+                PackIconMaterialKind.VolumeMute,
+                PackIconMaterialKind.VolumeHigh,
+                PackIconMaterialKind.VolumeLow,
+                PackIconMaterialKind.Keyboard,
+                PackIconMaterialKind.Star
+            };
+            var rand = new Random();
+            for (var i = 0; i < str.Length; i++)
+            {
+                var c = str[i];
+                var angle = i * 360d / str.Length;
+                var rad = angle * Math.PI / 180d;
+                //var block = new TextBlock
+                //{
+                //    Text = c.ToString(),
+                //    FontSize=25d,
+                //    TextAlignment = TextAlignment.Center
+                //};
+                var block = new PackIconMaterial
+                {
+                    Kind = icons[i],
+                    Width = 36d,
+                    Height = 36d,
+                    Foreground = new SolidColorBrush(Color.FromRgb(64, 64, 64))
+                };
 
-            //    var centerX = 150d;
-            //    var centerY = 150d;
-            //    var dx = 120d * Math.Cos(rad);
-            //    var dy = 120d * Math.Sin(rad);
-            //    Canvas.SetLeft(block, centerX + dx - 18d);
-            //    Canvas.SetTop(block, centerY + dy - 18);
-            //    Canvas.Children.Add(block);
-            //}
+                var centerX = 150d;
+                var centerY = 150d;
+                var dx = 120d * Math.Cos(rad);
+                var dy = 120d * Math.Sin(rad);
+                Canvas.SetLeft(block, centerX + dx - 18d);
+                Canvas.SetTop(block, centerY + dy - 18);
+                Canvas.Children.Add(block);
+            }
         }
 
         public bool IsPointerVisible
@@ -83,7 +83,7 @@ namespace GamepadMapper
             var newValue = (bool)e.NewValue;
             if (!newValue)
             {
-                var animation = new DoubleAnimation(0d, new Duration(TimeSpan.FromMilliseconds(100d)))
+                var animation = new DoubleAnimation(0d, new Duration(TimeSpan.FromMilliseconds(200d)))
                 {
                     EasingFunction = new QuarticEase
                     {
@@ -95,7 +95,7 @@ namespace GamepadMapper
             }
             else
             {
-                var animation = new DoubleAnimation(360d / 6d, new Duration(TimeSpan.FromMilliseconds(100d)))
+                var animation = new DoubleAnimation(360d / 6d, new Duration(TimeSpan.FromMilliseconds(200d)))
                 {
                     EasingFunction = new QuarticEase
                     {

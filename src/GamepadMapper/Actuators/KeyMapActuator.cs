@@ -3,7 +3,7 @@ using WindowsInput.Native;
 
 namespace GamepadMapper.Actuators
 {
-    public class KeyMapActuator : IMapping
+    public class KeyMapActuator : IMapping, IClearable
     {
         public KeyMapActuator(IKeyboardSimulator keyboard, IMouseSimulator mouse,  VirtualKeyCode virtualKey)
         {
@@ -54,6 +54,11 @@ namespace GamepadMapper.Actuators
                     Keyboard.KeyUp(VirtualKey);
                     break;
             }
+        }
+
+        public void Clear()
+        {
+            Deactivate();
         }
     }
 }

@@ -21,4 +21,9 @@
     {
         void Move(double x, double y);
     }
+
+    public interface IRadialActuator
+    {
+        void Update(double angle, double distance);
+    }
 }
