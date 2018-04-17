@@ -18,6 +18,8 @@ LB|Show OSD|Not yet implemented.
 RB|MOD|When holding MOD other buttons have alternate functions.
 LT|Press BACKSPACE, hold repeat|Repeat rate is affected by pressure.
 RT|Press SPACE, hold repeat|Repeat rate is affected by pressure.
+LSB|Map MBUTTON|Left stick click acts as a middle mouse button.
+RSB|Press HOME|
 Back|Press CTRL+ALT+TAB, hold ALT+TAB|Press back and use arrows to navigate, X to confirm, B to cancel.
 Start|Press WINKEY, hold WINKEY+D|WINKEY+D minimizes all windows.
 
@@ -37,5 +39,7 @@ ModLT|Toggle OSD|Not yet implemented.
 ModRB|N/A|
 ModLT|Press CTRL+Z, hold repeat|Repeat rate is affected by pressure.
 ModRT|Press CTRL+Y, hold repeat|Repeat rate is affected by pressure.
+ModLSB|Map MBUTTON|Same as LSB to avoid confusion.
+ModRSB|Press END|
 ModBack|Press F, hold BROWSER_REFRESH|F toggles full-screen in Youtube and VLC.
 ModStart|Press WINKEY+E, hold CTRL+SHIFT+ESCAPE|Open explorer/open task manager.
