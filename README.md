@@ -38,4 +38,4 @@ ModRB|N/A|
 ModLT|Press CTRL+Z, hold repeat|Repeat rate is affected by pressure.
 ModRT|Press CTRL+Y, hold repeat|Repeat rate is affected by pressure.
 ModBack|Press F, hold BROWSER_REFRESH|F toggles full-screen in Youtube and VLC.
-ModStart|Press CTRL+SHIFT+ESCAPE, hold SLEEP|Pressing opens task manager.
+ModStart|Press WINKEY+E, hold CTRL+SHIFT+ESCAPE|Open explorer/open task manager.
