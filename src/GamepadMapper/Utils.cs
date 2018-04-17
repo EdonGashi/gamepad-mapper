@@ -103,9 +103,9 @@ namespace GamepadMapper
                 [InputKey.ModLt] = RepeatKey(VirtualKeyCode.VK_Z, ModifierKeys.Control),
                 [InputKey.ModRt] = RepeatKey(VirtualKeyCode.VK_Y, ModifierKeys.Control),
                 [InputKey.ModBack] = PressHold(VirtualKeyCode.VK_F, 0, VirtualKeyCode.BROWSER_REFRESH, 0),
-                [InputKey.ModStart] = PressHold(VirtualKeyCode.ESCAPE, ModifierKeys.Shift | ModifierKeys.Control, VirtualKeyCode.SLEEP, 0),
+                [InputKey.ModStart] = PressHold(VirtualKeyCode.VK_E, ModifierKeys.WinKey, VirtualKeyCode.ESCAPE, ModifierKeys.Shift | ModifierKeys.Control),
                 [InputKey.ModLsb] = MapKey(VirtualKeyCode.MBUTTON),
-                [InputKey.ModRsb] = PressKey(VirtualKeyCode.END),
+                [InputKey.ModRsb] = PressKey(VirtualKeyCode.END)
             };
 
             return new Profile("Default", modifiers, mouseHandler, scrollHandler, buttonHandlers);
