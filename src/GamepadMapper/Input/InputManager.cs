@@ -59,8 +59,8 @@ namespace GamepadMapper.Input
                     if (!lastBack || !lastStart)
                     {
                         isEnabled = !isEnabled;
-                        // Ignore profile for 1 second after toggling to prevent accidental clicks.
-                        skipCycles = (int)Math.Round(fps + 1d);
+                        // Ignore profile for 0.2 seconds after toggling to prevent accidental clicks.
+                        skipCycles = (int)Math.Round(fps / 5d + 1d);
                         profile.ClearState();
                     }
                 }
