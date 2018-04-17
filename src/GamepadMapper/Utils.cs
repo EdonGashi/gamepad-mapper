@@ -47,14 +47,14 @@ namespace GamepadMapper
                 return new KeyMapHandler(new KeyMapActuator(simulator.Keyboard, simulator.Mouse, key));
             }
 
-            IButtonHandler PressKey(VirtualKeyCode key)
+            IButtonHandler PressKey(VirtualKeyCode key, ModifierKeys mods = 0)
             {
-                return new KeyPressHandler(new KeyPressActuator(simulator.Keyboard, key));
+                return new KeyPressHandler(new KeyPressActuator(simulator.Keyboard, key, mods));
             }
 
-            IButtonHandler RepeatKey(VirtualKeyCode key)
+            IButtonHandler RepeatKey(VirtualKeyCode key, ModifierKeys mods = 0)
             {
-                return new KeyPressRepeatHandler(new KeyPressActuator(simulator.Keyboard, key), new RepeatConfiguration());
+                return new KeyPressRepeatHandler(new KeyPressActuator(simulator.Keyboard, key, mods), new RepeatConfiguration());
             }
 
             IButtonHandler PressHold(
@@ -92,6 +92,20 @@ namespace GamepadMapper
                 [InputKey.Rsb] = PressKey(VirtualKeyCode.HOME),
 
                 //// Mod
+                [InputKey.ModA] = MapKey(VirtualKeyCode.LBUTTON),
+                [InputKey.ModB] = RepeatKey(VirtualKeyCode.DELETE),
+                [InputKey.ModX] = PressHold(VirtualKeyCode.TAB, ModifierKeys.Control, VirtualKeyCode.TAB, ModifierKeys.Control | ModifierKeys.Shift),
+                [InputKey.ModY] = PressHold(VirtualKeyCode.VK_T, ModifierKeys.Control, VirtualKeyCode.VK_W, ModifierKeys.Control),
+                [InputKey.ModDPadLeft] = RepeatKey(VirtualKeyCode.LEFT, ModifierKeys.Alt),
+                [InputKey.ModDPadUp] = RepeatKey(VirtualKeyCode.VOLUME_UP),
+                [InputKey.ModDPadRight] = RepeatKey(VirtualKeyCode.RIGHT, ModifierKeys.Alt),
+                [InputKey.ModDPadDown] = RepeatKey(VirtualKeyCode.VOLUME_DOWN),
+                [InputKey.ModLt] = RepeatKey(VirtualKeyCode.VK_Z, ModifierKeys.Control),
+                [InputKey.ModRt] = RepeatKey(VirtualKeyCode.VK_Y, ModifierKeys.Control),
+                [InputKey.ModBack] = PressHold(VirtualKeyCode.VK_F, 0, VirtualKeyCode.BROWSER_REFRESH, 0),
+                [InputKey.ModStart] = PressHold(VirtualKeyCode.ESCAPE, ModifierKeys.Shift | ModifierKeys.Control, VirtualKeyCode.SLEEP, 0),
+                [InputKey.ModLsb] = MapKey(VirtualKeyCode.MBUTTON),
+                [InputKey.ModRsb] = PressKey(VirtualKeyCode.END),
             };
 
             return new Profile("Default", modifiers, mouseHandler, scrollHandler, buttonHandlers);

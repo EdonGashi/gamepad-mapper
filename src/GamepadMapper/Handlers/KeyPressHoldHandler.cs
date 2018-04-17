@@ -73,6 +73,8 @@ namespace GamepadMapper.Handlers
                     holdHandled = false;
                     isPressed = false;
                 }
+
+                holdDuration = 0d;
             }
         }
     }

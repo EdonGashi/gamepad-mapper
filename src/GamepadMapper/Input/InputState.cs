@@ -7,8 +7,6 @@ namespace GamepadMapper.Input
 {
     public class InputState
     {
-        private const double Sqrt2 = 1.4142135623730950488d;
-
         private struct Point
         {
             public readonly double X;
@@ -25,16 +23,18 @@ namespace GamepadMapper.Input
         {
             var dist = Math.Sqrt(x * x + y * y);
             var angle = Math.Atan2(y, x);
+
             if (dist <= deadzone)
             {
                 return new Point();
             }
 
-            dist -= deadzone;
             if (dist > 1d)
             {
                 dist = 1d;
             }
+
+            dist = (dist - deadzone) / (1d - deadzone);
 
             return new Point(
                 dist * Math.Cos(angle),

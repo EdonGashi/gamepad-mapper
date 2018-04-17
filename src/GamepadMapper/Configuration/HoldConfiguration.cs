@@ -7,6 +7,6 @@
 
     public class HoldConfiguration : IHoldConfiguration
     {
-        public double HoldMilliseconds { get; set; } = 600d;
+        public double HoldMilliseconds { get; set; } = 800d;
     }
 }
