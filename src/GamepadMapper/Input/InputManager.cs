@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GamepadMapper.Configuration;
 using XInputDotNetPure;
 
 namespace GamepadMapper.Input
 {
     public class InputManager
     {
-        public async Task Run(Configuration configuration, Profile initialProfile, double fps)
+        public async Task Run(IDeadzoneConfiguration configuration, Profile initialProfile, double fps)
         {
             var pollTime = TimeSpan.FromMilliseconds(1000d);
             var frameTime = 1000d / fps;
@@ -49,9 +50,7 @@ namespace GamepadMapper.Input
 
                 connected = true;
 
-                var inputState = InputState.FromGamePadState(state,
-                    configuration.LtDeadZone, configuration.RtDeadZone,
-                    configuration.LsDeadZone, configuration.RsDeadZone);
+                var inputState = InputState.FromGamePadState(state, configuration);
 
                 var back = state.Buttons.Back == XInputDotNetPure.ButtonState.Pressed;
                 var start = state.Buttons.Start == XInputDotNetPure.ButtonState.Pressed;

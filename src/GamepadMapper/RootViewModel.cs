@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using WindowsInput;
 using WindowsInput.Native;
+using GamepadMapper.Configuration;
+using GamepadMapper.Input;
 using XInputDotNetPure;
+using ButtonState = XInputDotNetPure.ButtonState;
 
 namespace GamepadMapper
 {
@@ -66,8 +69,12 @@ namespace GamepadMapper
             return Math.Sqrt(x * x + y * y);
         }
 
-        private Task Run(Window window, CancellationToken token)
+        private async Task Run(Window window, CancellationToken token)
         {
+            var app = new InputManager();
+            await app.Run(new DeadzoneConfiguration(), Utils.GetDefaultProfile(), 150d);
+
+
             var inputSimulator = new InputSimulator();
             var lastState = GamePad.GetState(PlayerIndex.One);
             var forceY = 0f;

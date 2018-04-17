@@ -73,18 +73,32 @@
     </ApplicationDefinition>
     <Compile Include="AdditionConverter.cs" />
     <Compile Include="AngleConverter.cs" />
+    <Compile Include="Actuators\KeyMapActuator.cs" />
+    <Compile Include="Actuators\KeyPressActuator.cs" />
+    <Compile Include="Actuators\MouseScrollActuator.cs" />
+    <Compile Include="Actuators\MouseMovementActuator.cs" />
+    <Compile Include="Actuators\Types.cs" />
     <Compile Include="Input\AnalogState.cs" />
+    <Compile Include="Configuration\DeadzoneConfiguration.cs" />
+    <Compile Include="Configuration\RepeatConfiguration.cs" />
+    <Compile Include="Handlers\KeyPressHoldHandler.cs" />
+    <Compile Include="Handlers\KeyPressRepeatHandler.cs" />
+    <Compile Include="Configuration\HoldConfiguration.cs" />
+    <Compile Include="Input\ModifierKey.cs" />
+    <Compile Include="Handlers\KeyPressHandler.cs" />
+    <Compile Include="Handlers\MovementHandler.cs" />
     <Compile Include="Input\InputManager.cs" />
-    <Compile Include="Input\Configuration.cs" />
+    <Compile Include="Configuration\MovementConfiguration.cs" />
     <Compile Include="Input\FrameDetails.cs" />
-    <Compile Include="Input\IHandler.cs" />
+    <Compile Include="Handlers\Types.cs" />
     <Compile Include="Input\Button.cs" />
     <Compile Include="Input\ButtonState.cs" />
     <Compile Include="Input\InputKey.cs" />
     <Compile Include="Input\InputState.cs" />
-    <Compile Include="Input\KeyMapHandler.cs" />
+    <Compile Include="Handlers\KeyMapHandler.cs" />
     <Compile Include="Input\Profile.cs" />
     <Compile Include="Input\ThumbStick.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RadialMenu.xaml.cs">
       <DependentUpon>RadialMenu.xaml</DependentUpon>

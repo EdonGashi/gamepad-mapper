@@ -1,49 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using GamepadMapper.Configuration;
 using XInputDotNetPure;
 
 namespace GamepadMapper.Input
 {
     public class InputState
     {
-        public static InputState FromGamePadState(GamePadState gamePadState, double ltDeadzone, double rtDeadzone, double lsDeadzone, double rsDeadzone)
+        private const double Sqrt2 = 1.4142135623730950488d;
+
+        private struct Point
         {
+            public readonly double X;
+            public readonly double Y;
+
+            public Point(double x, double y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
+
+        private static Point Normalize(double x, double y, double deadzone)
+        {
+            var dist = Math.Sqrt(x * x + y * y);
+            var angle = Math.Atan2(y, x);
+            if (dist <= deadzone)
+            {
+                return new Point();
+            }
+
+            dist -= deadzone;
+            if (dist > 1d)
+            {
+                dist = 1d;
+            }
+
+            return new Point(
+                dist * Math.Cos(angle),
+                dist * Math.Sin(angle)
+            );
+        }
+
+        public static InputState FromGamePadState(GamePadState gamePadState, IDeadzoneConfiguration deadzones)
+        {
+            var ltDeadzone = deadzones.LtDeadzone;
+            var rtDeadzone = deadzones.RtDeadzone;
+
             var buttons = gamePadState.Buttons;
             var keys = gamePadState.DPad;
             var triggers = gamePadState.Triggers;
             var sticks = gamePadState.ThumbSticks;
-            double lx = sticks.Left.X;
-            double ly = sticks.Left.Y;
-            var lDist = Math.Sqrt(lx * lx + ly * ly);
-            if (lDist <= lsDeadzone)
-            {
-                lx = 0d;
-                ly = 0d;
-            }
-            else
-            {
-                var factor = (lDist - lsDeadzone) / (1d - lsDeadzone);
-                lx *= factor;
-                ly *= factor;
-            }
-
-            double rx = sticks.Right.X;
-            double ry = sticks.Right.Y;
-            var rDist = Math.Sqrt(rx * rx + ry * ry);
-            if (rDist <= rsDeadzone)
-            {
-                rx = 0d;
-                ry = 0d;
-            }
-            else
-            {
-                var factor = (rDist - rsDeadzone) / (1d - rsDeadzone);
-                rx *= factor;
-                ry *= factor;
-            }
-
-            var ls = new AnalogState(lx, ly);
-            var rs = new AnalogState(rx, ry);
+            var lpoint = Normalize(sticks.Left.X, sticks.Left.Y, deadzones.LsDeadzone);
+            var rpoint = Normalize(sticks.Right.X, sticks.Right.Y, deadzones.RsDeadzone);
+            var ls = new AnalogState(lpoint.X, lpoint.Y);
+            var rs = new AnalogState(rpoint.X, rpoint.Y);
             var dict = new Dictionary<Button, ButtonState>
             {
                 [Button.A] = new ButtonState(buttons.A == XInputDotNetPure.ButtonState.Pressed),
