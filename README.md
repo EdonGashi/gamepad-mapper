@@ -15,10 +15,10 @@ DPadUp|Press UP, hold repeat|
 DPadRight|Press RIGHT, hold repeat|
 DPadDown|Press DOWN, hold repeat|
 LB|Show OSD|Not yet implemented.
-RB|MOD|When holding MOD key buttons have different functions.
+RB|MOD|When holding MOD other buttons have alternate functions.
 LT|Press BACKSPACE, hold repeat|Repeat rate is affected by pressure.
 RT|Press SPACE, hold repeat|Repeat rate is affected by pressure.
-Back|Press CTRL+ALT+TAB, hold ALT+TAB|Utilities for window switching.
+Back|Press CTRL+ALT+TAB, hold ALT+TAB|Press back and use arrows to navigate, X to confirm, B to cancel.
 Start|Press WINKEY, hold WINKEY+D|WINKEY+D minimizes all windows.
 
 The keys have different functions when MOD button is pressed:
