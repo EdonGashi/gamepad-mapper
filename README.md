@@ -43,3 +43,5 @@ ModLSB|Map MBUTTON|Same as LSB to avoid confusion.
 ModRSB|Press END|
 ModBack|Press F, hold BROWSER_REFRESH|F toggles full-screen in Youtube and VLC.
 ModStart|Press WINKEY+E, hold CTRL+SHIFT+ESCAPE|Open explorer/open task manager.
+
+Back+Start combination enables/disables processing input. This gesture cannot be modified in configuration.
