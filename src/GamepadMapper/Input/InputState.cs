@@ -44,15 +44,15 @@ namespace GamepadMapper.Input
 
         public static InputState FromGamePadState(GamePadState gamePadState, IDeadzoneConfiguration deadzones)
         {
-            var ltDeadzone = deadzones.LtDeadzone;
-            var rtDeadzone = deadzones.RtDeadzone;
+            var ltDeadzone = deadzones.Lt;
+            var rtDeadzone = deadzones.Rt;
 
             var buttons = gamePadState.Buttons;
             var keys = gamePadState.DPad;
             var triggers = gamePadState.Triggers;
             var sticks = gamePadState.ThumbSticks;
-            var lpoint = Normalize(sticks.Left.X, sticks.Left.Y, deadzones.LsDeadzone);
-            var rpoint = Normalize(sticks.Right.X, sticks.Right.Y, deadzones.RsDeadzone);
+            var lpoint = Normalize(sticks.Left.X, sticks.Left.Y, deadzones.Ls);
+            var rpoint = Normalize(sticks.Right.X, sticks.Right.Y, deadzones.Rs);
             var ls = new AnalogState(lpoint.X, lpoint.Y);
             var rs = new AnalogState(rpoint.X, rpoint.Y);
             var dict = new Dictionary<Button, ButtonState>

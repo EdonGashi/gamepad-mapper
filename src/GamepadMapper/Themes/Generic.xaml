@@ -1,0 +1,160 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:configuration="clr-namespace:GamepadMapper.Configuration"
+    xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    xmlns:wpf="clr-namespace:GamepadMapper.Wpf">
+
+    <wpf:StartAngleConverter x:Key="StartAngleConverter" />
+    <wpf:EndAngleConverter x:Key="EndAngleConverter" />
+
+    <DataTemplate DataType="{x:Type configuration:HelpConfiguration}">
+        <StackPanel>
+            <ItemsControl ItemsSource="{Binding InputHelpTexts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type wpf:RadialMenu}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type wpf:RadialMenu}">
+                    <wpf:ReversibleStackPanel>
+                        <Canvas
+                            x:Name="Canvas"
+                            Width="360"
+                            Height="360"
+                            RenderTransformOrigin="0.5,0.5">
+                            <Canvas.Clip>
+                                <EllipseGeometry
+                                    Center="180,180"
+                                    RadiusX="180"
+                                    RadiusY="180" />
+                            </Canvas.Clip>
+                            <ed:Arc
+                                x:Name="MenuCircle"
+                                Width="360"
+                                Height="360"
+                                Margin="0"
+                                ArcThickness="70"
+                                ArcThicknessUnit="Pixel"
+                                EndAngle="-60"
+                                Fill="#FFE0E0E0"
+                                StartAngle="-60"
+                                Stretch="None"
+                                StrokeThickness="0" />
+                            <ed:Arc
+                                x:Name="Pointer"
+                                Width="360"
+                                Height="360"
+                                Margin="0"
+                                ArcThickness="70"
+                                ArcThicknessUnit="Pixel"
+                                Fill="#FF30C0FF"
+                                Stretch="None"
+                                StrokeThickness="0">
+                                <ed:Arc.StartAngle>
+                                    <MultiBinding Converter="{StaticResource StartAngleConverter}">
+                                        <Binding Path="PointerAngle" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="PointerWidth" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="(wpf:RadialMenu.ArcWidth)" RelativeSource="{RelativeSource Self}" />
+                                    </MultiBinding>
+                                </ed:Arc.StartAngle>
+                                <ed:Arc.EndAngle>
+                                    <MultiBinding Converter="{StaticResource EndAngleConverter}">
+                                        <Binding Path="PointerAngle" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="PointerWidth" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Path="(wpf:RadialMenu.ArcWidth)" RelativeSource="{RelativeSource Self}" />
+                                    </MultiBinding>
+                                </ed:Arc.EndAngle>
+                            </ed:Arc>
+                            <TextBlock
+                                Canvas.Top="160"
+                                Width="160"
+                                Text="{Binding Path=UserControl}"
+                                TextAlignment="Center" />
+                        </Canvas>
+                        <ContentPresenter Content="{TemplateBinding HelpScreen}" />
+                    </wpf:ReversibleStackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsOpen" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.EndAngle)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="359.9999">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.StartAngle)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.StartAngle)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.EndAngle)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPointerVisible" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(wpf:RadialMenu.ArcWidth)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(wpf:RadialMenu.ArcWidth)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

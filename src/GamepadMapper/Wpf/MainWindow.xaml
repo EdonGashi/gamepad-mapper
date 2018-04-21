@@ -1,11 +1,11 @@
 ﻿<Window
-    x:Class="GamepadMapper.MainWindow"
+    x:Class="GamepadMapper.Wpf.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:GamepadMapper"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpf="clr-namespace:GamepadMapper.Wpf"
+    xmlns:menus="clr-namespace:GamepadMapper.Menus"
     Title="MainWindow"
     Width="525"
     Height="350"
@@ -18,17 +18,14 @@
     Topmost="True"
     WindowState="Maximized"
     WindowStyle="None"
-    mc:Ignorable="d">
-    <Window.DataContext>
-        <local:RootViewModel />
-    </Window.DataContext>
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignData Type=menus:IMenuController, d:IsDesignTimeCreatable=False}">
     <Grid Margin="40,60">
-        <local:RadialMenu
-            IsPointerVisible="{Binding MenuController.IsPointerVisible}"
-            PointerAngle="{Binding MenuController.MenuAngle}"
-            IsOpen="{Binding MenuController.IsMenuOpen}"
-            Width="300"
-            Height="300"
+        <wpf:RadialMenu
+            IsOpen="{Binding IsOpen}"
+            PointerAngle="{Binding PointerAngle}"
+            IsPointerVisible="{Binding IsPointerVisible}"
+            PointerWidth="{Binding PointerWidth}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom" />
     </Grid>

@@ -67,12 +67,12 @@ namespace GamepadMapper.Handlers
             avgCos /= memory.Count;
             avgSin /= memory.Count;
             var avgAngle = Math.Atan2(avgSin, avgCos);
-            while (memory.Count > Configuration.SmoothingMilliseconds / frame.FrameTime)
+            while (memory.Count > Configuration.Smoothing / frame.FrameTime)
             {
                 memory.Dequeue();
             }
 
-            RadialActuator.Update(avgAngle, distance);
+            RadialActuator.Update((avgAngle * 180d / Math.PI + 90d) % 360d, distance);
         }
     }
 }

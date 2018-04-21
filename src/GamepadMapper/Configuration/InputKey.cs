@@ -1,4 +1,4 @@
-namespace GamepadMapper.Input
+namespace GamepadMapper.Configuration
 {
     public enum InputKey
     {
@@ -10,14 +10,14 @@ namespace GamepadMapper.Input
         DPadUp,
         DPadRight,
         DPadDown,
-        Lb,
-        Rb,
-        Lt,
-        Rt,
+        LB,
+        RB,
+        LT,
+        RT,
         Back,
         Start,
-        Lsb,
-        Rsb,
+        LSB,
+        RSB,
         ModA,
         ModB,
         ModX,
@@ -26,13 +26,13 @@ namespace GamepadMapper.Input
         ModDPadUp,
         ModDPadRight,
         ModDPadDown,
-        ModLb,
-        ModRb,
-        ModLt,
-        ModRt,
+        ModLB,
+        ModRB,
+        ModLT,
+        ModRT,
         ModBack,
         ModStart,
-        ModLsb,
-        ModRsb,
+        ModLSB,
+        ModRSB
     }
 }

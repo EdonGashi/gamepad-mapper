@@ -4,7 +4,7 @@
     {
         double MinRadius { get; }
 
-        double SmoothingMilliseconds { get; }
+        double Smoothing { get; }
 
         bool InvertX { get; }
 
@@ -13,9 +13,9 @@
 
     public class RadialConfiguration : IRadialConfiguration
     {
-        public double MinRadius { get; } = 0.5d;
+        public double MinRadius { get; set; } = 0.5d;
 
-        public double SmoothingMilliseconds { get; set; } = 150d;
+        public double Smoothing { get; set; } = 100d;
 
         public bool InvertX { get; set; } = false;
 

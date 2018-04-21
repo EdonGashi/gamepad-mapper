@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace GamepadMapper
+namespace GamepadMapper.Wpf
 {
     internal class StartAngleConverter : IMultiValueConverter
     {
@@ -14,7 +14,7 @@ namespace GamepadMapper
             }
 
             var angle = (double)values[0];
-            var width = (double)values[1];
+            var width = (double)values[1] * (double)values[2];
             return angle - width / 2d;
         }
 
@@ -34,7 +34,7 @@ namespace GamepadMapper
             }
 
             var angle = (double)values[0];
-            var width = (double)values[1];
+            var width = (double)values[1] * (double)values[2];
             return angle + width / 2d;
         }
 

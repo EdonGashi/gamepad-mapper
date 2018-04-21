@@ -2,11 +2,11 @@
 {
     public interface IHoldConfiguration
     {
-        double HoldMilliseconds { get; }
+        double Duration { get; }
     }
 
     public class HoldConfiguration : IHoldConfiguration
     {
-        public double HoldMilliseconds { get; set; } = 800d;
+        public double Duration { get; set; } = 800d;
     }
 }

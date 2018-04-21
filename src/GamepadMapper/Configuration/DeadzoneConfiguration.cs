@@ -2,23 +2,23 @@
 {
     public interface IDeadzoneConfiguration
     {
-        double LtDeadzone { get; }
+        double Lt { get; }
 
-        double RtDeadzone { get; }
+        double Rt { get; }
 
-        double LsDeadzone { get; }
+        double Ls { get; }
 
-        double RsDeadzone { get; }
+        double Rs { get; }
     }
 
     public class DeadzoneConfiguration : IDeadzoneConfiguration
     {
-        public double LtDeadzone { get; set; } = 0.1d;
+        public double Lt { get; set; } = 0.1d;
 
-        public double RtDeadzone { get; set; } = 0.1d;
+        public double Rt { get; set; } = 0.1d;
 
-        public double LsDeadzone { get; set; } = 0.1d;
+        public double Ls { get; set; } = 0.1d;
 
-        public double RsDeadzone { get; set; } = 0.1d;
+        public double Rs { get; set; } = 0.1d;
     }
 }

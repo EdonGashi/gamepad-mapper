@@ -1,4 +1,5 @@
 ﻿using GamepadMapper.Actuators;
+using GamepadMapper.Configuration;
 using GamepadMapper.Input;
 
 namespace GamepadMapper.Handlers

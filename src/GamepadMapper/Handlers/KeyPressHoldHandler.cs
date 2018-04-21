@@ -47,7 +47,7 @@ namespace GamepadMapper.Handlers
                 {
                     // Down -> down
                     holdDuration += frame.TimeDelta;
-                    if (!holdHandled && holdDuration >= Configuration.HoldMilliseconds)
+                    if (!holdHandled && holdDuration >= Configuration.Duration)
                     {
                         HoldAction.Execute();
                         holdHandled = true;
@@ -65,7 +65,7 @@ namespace GamepadMapper.Handlers
                 if (isPressed)
                 {
                     // Down -> up
-                    if (holdDuration < Configuration.HoldMilliseconds)
+                    if (holdDuration < Configuration.Duration)
                     {
                         PressAction.Execute();
                     }

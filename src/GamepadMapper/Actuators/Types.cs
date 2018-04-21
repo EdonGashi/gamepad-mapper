@@ -9,7 +9,7 @@
     {
         void Execute();
     }
-
+    
     public interface IMapping
     {
         void Activate();

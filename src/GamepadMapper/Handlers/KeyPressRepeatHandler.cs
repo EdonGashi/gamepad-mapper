@@ -38,7 +38,7 @@ namespace GamepadMapper.Handlers
                 {
                     Action.Execute();
                     isPressed = true;
-                    timeLeft = RepeatConfiguration.DelayMilliseconds;
+                    timeLeft = RepeatConfiguration.Delay;
                 }
                 else
                 {
@@ -53,7 +53,7 @@ namespace GamepadMapper.Handlers
                     if (timeLeft <= 0d)
                     {
                         Action.Execute();
-                        timeLeft = RepeatConfiguration.RepeatMilliseconds;
+                        timeLeft = RepeatConfiguration.Interval;
                     }
                 }
             }

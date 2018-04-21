@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GamepadMapper.Configuration;
 using GamepadMapper.Handlers;
 
 namespace GamepadMapper.Input
