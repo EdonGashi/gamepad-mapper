@@ -3,19 +3,541 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:configuration="clr-namespace:GamepadMapper.Configuration"
     xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:wpf="clr-namespace:GamepadMapper.Wpf">
 
     <wpf:StartAngleConverter x:Key="StartAngleConverter" />
     <wpf:EndAngleConverter x:Key="EndAngleConverter" />
+    <wpf:IsModConverter x:Key="IsModConverter" />
+
+    <Style x:Key="RoundWrapper" TargetType="Border">
+        <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="MinHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="BorderThickness" Value="1.2" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="CornerRadius" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+    </Style>
+
+    <wpf:HelpKeyTemplateSelector x:Key="HelpKeyTemplateSelector">
+        <wpf:HelpKeyTemplateSelector.A>
+            <DataTemplate>
+                <Border BorderBrush="#30c849" Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#30c849">
+                        A
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.A>
+        <wpf:HelpKeyTemplateSelector.B>
+            <DataTemplate>
+                <Border BorderBrush="#ff3737" Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#ff3737">
+                        B
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.B>
+        <wpf:HelpKeyTemplateSelector.X>
+            <DataTemplate>
+                <Border BorderBrush="#37afff" Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#37afff">
+                        X
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.X>
+        <wpf:HelpKeyTemplateSelector.Y>
+            <DataTemplate>
+                <Border BorderBrush="#ffe137" Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="#ffe137">
+                        Y
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.Y>
+        <wpf:HelpKeyTemplateSelector.LB>
+            <DataTemplate>
+                <Border
+                    BorderBrush="White"
+                    BorderThickness="1"
+                    CornerRadius="10,4,4,4">
+                    <TextBlock
+                        Margin="6,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        LB
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.LB>
+        <wpf:HelpKeyTemplateSelector.RB>
+            <DataTemplate>
+                <Border
+                    BorderBrush="White"
+                    BorderThickness="1"
+                    CornerRadius="4,10,4,4">
+                    <TextBlock
+                        Margin="6,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        RB
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.RB>
+        <wpf:HelpKeyTemplateSelector.LT>
+            <DataTemplate>
+                <Border
+                    BorderBrush="White"
+                    BorderThickness="1"
+                    CornerRadius="4,4,4,8">
+                    <TextBlock
+                        Margin="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        LT
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.LT>
+        <wpf:HelpKeyTemplateSelector.RT>
+            <DataTemplate>
+                <Border
+                    BorderBrush="White"
+                    BorderThickness="1"
+                    CornerRadius="4,4,8,4">
+                    <TextBlock
+                        Margin="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        RT
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.RT>
+        <wpf:HelpKeyTemplateSelector.LSB>
+            <DataTemplate>
+                <Border Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        <TextBlock.LayoutTransform>
+                            <ScaleTransform ScaleX="0.6" />
+                        </TextBlock.LayoutTransform>
+                        LSB
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.LSB>
+        <wpf:HelpKeyTemplateSelector.RSB>
+            <DataTemplate>
+                <Border Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        <TextBlock.LayoutTransform>
+                            <ScaleTransform ScaleX="0.6" />
+                        </TextBlock.LayoutTransform>
+                        RSB
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.RSB>
+        <wpf:HelpKeyTemplateSelector.LS>
+            <DataTemplate>
+                <Border Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        L
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.LS>
+        <wpf:HelpKeyTemplateSelector.RS>
+            <DataTemplate>
+                <Border Style="{StaticResource RoundWrapper}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="White">
+                        R
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.RS>
+        <wpf:HelpKeyTemplateSelector.Start>
+            <DataTemplate>
+                <Border Style="{StaticResource RoundWrapper}">
+                    <iconPacks:PackIconMaterial
+                        Width="14"
+                        Height="14"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Kind="Menu" />
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.Start>
+        <wpf:HelpKeyTemplateSelector.Back>
+            <DataTemplate>
+                <Border Style="{StaticResource RoundWrapper}">
+                    <iconPacks:PackIconMaterial
+                        Width="14"
+                        Height="14"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Flip="Vertical"
+                        Kind="CheckboxMultipleBlankOutline" />
+                </Border>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.Back>
+        <wpf:HelpKeyTemplateSelector.DPad>
+            <DataTemplate>
+                <Path
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure IsClosed="True" StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPad>
+        <wpf:HelpKeyTemplateSelector.DPadHorizontal>
+            <DataTemplate>
+                <Path
+                    Fill="White"
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="False"
+                                StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="2,15">
+                                <LineSegment Point="6,12" />
+                                <LineSegment Point="6,18" />
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="28,15">
+                                <LineSegment Point="24,12" />
+                                <LineSegment Point="24,18" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPadHorizontal>
+        <wpf:HelpKeyTemplateSelector.DPadVertical>
+            <DataTemplate>
+                <Path
+                    Fill="White"
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="False"
+                                StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="15,2">
+                                <LineSegment Point="12,6" />
+                                <LineSegment Point="18,6" />
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="15,28">
+                                <LineSegment Point="12,24" />
+                                <LineSegment Point="18,24" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPadVertical>
+        <wpf:HelpKeyTemplateSelector.DPadLeft>
+            <DataTemplate>
+                <Path
+                    Fill="White"
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="False"
+                                StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="2,15">
+                                <LineSegment Point="6,12" />
+                                <LineSegment Point="6,18" />
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="28,15">
+                                <LineSegment Point="24,12" />
+                                <LineSegment Point="24,18" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPadLeft>
+        <wpf:HelpKeyTemplateSelector.DPadUp>
+            <DataTemplate>
+                <Path
+                    Fill="White"
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="False"
+                                StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="10,0">
+                                <LineSegment Point="20,0" />
+                                <LineSegment Point="20,10" />
+                                <LineSegment Point="10,10" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPadUp>
+        <wpf:HelpKeyTemplateSelector.DPadRight>
+            <DataTemplate>
+                <Path
+                    Fill="White"
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="False"
+                                StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="20,10">
+                                <LineSegment Point="30,10" />
+                                <LineSegment Point="30,20" />
+                                <LineSegment Point="20,20" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPadRight>
+        <wpf:HelpKeyTemplateSelector.DPadDown>
+            <DataTemplate>
+                <Path
+                    Fill="White"
+                    Stretch="Uniform"
+                    Stroke="White"
+                    StrokeThickness="1">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="False"
+                                StartPoint="0,10">
+                                <PathFigure.Segments>
+                                    <LineSegment Point="10,10" />
+                                    <LineSegment Point="10,0" />
+                                    <LineSegment Point="20,0" />
+                                    <LineSegment Point="20,10" />
+                                    <LineSegment Point="30,10" />
+                                    <LineSegment Point="30,20" />
+                                    <LineSegment Point="20,20" />
+                                    <LineSegment Point="20,30" />
+                                    <LineSegment Point="10,30" />
+                                    <LineSegment Point="10,20" />
+                                    <LineSegment Point="0,20" />
+                                </PathFigure.Segments>
+                            </PathFigure>
+                            <PathFigure
+                                IsClosed="True"
+                                IsFilled="True"
+                                StartPoint="10,20">
+                                <LineSegment Point="20,20" />
+                                <LineSegment Point="20,30" />
+                                <LineSegment Point="10,30" />
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </DataTemplate>
+        </wpf:HelpKeyTemplateSelector.DPadDown>
+    </wpf:HelpKeyTemplateSelector>
 
     <DataTemplate DataType="{x:Type configuration:HelpConfiguration}">
         <StackPanel>
-            <ItemsControl ItemsSource="{Binding InputHelpTexts}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+            <ItemsControl
+                FontSize="15"
+                Foreground="#FFFFFFFF"
+                ItemsSource="{Binding InputHelpTexts}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="4"
+                            HorizontalAlignment="Right"
+                            Background="#AA000000"
+                            CornerRadius="8">
+                            <StackPanel Margin="8" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,0,4,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Visibility="{Binding Key, Converter={StaticResource IsModConverter}}">
+                                    <TextBlock.LayoutTransform>
+                                        <ScaleTransform ScaleX="0.6" />
+                                    </TextBlock.LayoutTransform>
+                                    MOD
+                                </TextBlock>
+                                <ContentPresenter
+                                    Margin="0,0,8,0"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Key}"
+                                    ContentTemplateSelector="{StaticResource HelpKeyTemplateSelector}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Foreground="#FFFFFF"
+                                    Text="{Binding Description}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
     </DataTemplate>
@@ -24,7 +546,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type wpf:RadialMenu}">
-                    <wpf:ReversibleStackPanel>
+                    <wpf:ReversibleStackPanel Orientation="Horizontal" ReverseOrder="True">
                         <Canvas
                             x:Name="Canvas"
                             Width="360"
@@ -73,13 +595,12 @@
                                     </MultiBinding>
                                 </ed:Arc.EndAngle>
                             </ed:Arc>
-                            <TextBlock
-                                Canvas.Top="160"
-                                Width="160"
-                                Text="{Binding Path=UserControl}"
-                                TextAlignment="Center" />
                         </Canvas>
-                        <ContentPresenter Content="{TemplateBinding HelpScreen}" />
+                        <ContentPresenter
+                            Margin="8"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Content="{TemplateBinding HelpScreen}" />
                     </wpf:ReversibleStackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsOpen" Value="True">

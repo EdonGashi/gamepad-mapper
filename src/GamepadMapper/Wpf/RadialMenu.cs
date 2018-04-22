@@ -28,6 +28,12 @@ namespace GamepadMapper.Wpf
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RadialMenu), new FrameworkPropertyMetadata(typeof(RadialMenu)));
         }
 
+        public static readonly DependencyProperty ItemFocusedProperty =
+            DependencyProperty.Register("ItemFocused",
+                typeof(bool), 
+                typeof(RadialMenu),
+                new PropertyMetadata(false));
+
         public static readonly DependencyProperty IsPointerVisibleProperty =
             DependencyProperty.Register("IsPointerVisible",
                 typeof(bool),
@@ -66,14 +72,20 @@ namespace GamepadMapper.Wpf
 
         public PageItem CurrentItem
         {
-            get { return (PageItem)GetValue(CurrentItemProperty); }
-            set { SetValue(CurrentItemProperty, value); }
+            get => (PageItem)GetValue(CurrentItemProperty);
+            set => SetValue(CurrentItemProperty, value);
+        }
+
+        public bool ItemFocused
+        {
+            get => (bool)GetValue(ItemFocusedProperty);
+            set => SetValue(ItemFocusedProperty, value);
         }
 
         public HelpConfiguration HelpScreen
         {
-            get { return (HelpConfiguration)GetValue(HelpScreenProperty); }
-            set { SetValue(HelpScreenProperty, value); }
+            get => (HelpConfiguration)GetValue(HelpScreenProperty);
+            set => SetValue(HelpScreenProperty, value);
         }
 
         public bool IsPointerVisible

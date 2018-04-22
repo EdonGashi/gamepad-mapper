@@ -19,12 +19,14 @@
     WindowState="Maximized"
     WindowStyle="None"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignData Type=menus:IMenuController, d:IsDesignTimeCreatable=False}">
+    d:DataContext="{d:DesignInstance Type=menus:IMenuController, d:IsDesignTimeCreatable=False}">
     <Grid Margin="40,60">
         <wpf:RadialMenu
             IsOpen="{Binding IsOpen}"
             PointerAngle="{Binding PointerAngle}"
             IsPointerVisible="{Binding IsPointerVisible}"
+            HelpScreen="{Binding HelpScreen}"
+            
             PointerWidth="{Binding PointerWidth}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom" />

@@ -21,6 +21,8 @@ namespace GamepadMapper.Configuration
         Start,
         LSB,
         RSB,
+        LS,
+        RS,
         ModA,
         ModB,
         ModX,
@@ -39,8 +41,6 @@ namespace GamepadMapper.Configuration
         ModBack,
         ModStart,
         ModLSB,
-        ModRSB,
-        LS,
-        RS
+        ModRSB
     }
 }

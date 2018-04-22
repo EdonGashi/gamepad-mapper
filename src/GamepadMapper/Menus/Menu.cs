@@ -90,9 +90,19 @@ namespace GamepadMapper.Menus
             Index = index;
             var angleStep = 360d / totalItems;
             var angleStart = AngleStart + index * angleStep;
-            Angle = angleStart;
-            StartAngle = Normalize(angleStart - angleStep / 2d);
-            EndAngle = Normalize(angleStart + angleStep / 2d);
+            if (totalItems == 1)
+            {
+                Angle = 0d;
+                StartAngle = 360d - 90d;
+                EndAngle = 90d;
+            }
+            else
+            {
+                Angle = angleStart;
+                StartAngle = Normalize(angleStart - angleStep / 2d);
+                EndAngle = Normalize(angleStart + angleStep / 2d);
+            }
+
             CommandBindings = commandBindings;
             HelpScreen = helpScreen;
             Icon = icon;

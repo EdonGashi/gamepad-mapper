@@ -83,7 +83,7 @@ namespace GamepadMapper.Menus
 
         public double PointerWidth => currentPage != null && currentPage.Items.Count > 1
             ? 360d / currentPage.Items.Count
-            : 359.9999d;
+            : 180d;
 
         public HelpConfiguration HelpScreen => currentItem?.HelpScreen ?? currentPage?.HelpScreen ?? currentMenu?.HelpScreen;
 
@@ -222,7 +222,7 @@ namespace GamepadMapper.Menus
                     return;
                 }
 
-                var nextItem = GetCurrentItem();
+                var nextItem = GetItem(angle);
                 if (nextItem == currentItem)
                 {
                     return;
@@ -365,25 +365,69 @@ namespace GamepadMapper.Menus
             }
         }
 
-        private PageItem GetCurrentItem()
+        private PageItem GetItem(double angle)
         {
-            var hasPointer = IsPointerVisible;
-            if (!hasPointer)
-            {
-                return null;
-            }
-
-            var page = CurrentPage;
+            var page = currentPage;
             if (page == null)
             {
                 return null;
             }
 
-            var angle = PointerAngle;
+            if (angle < 0d)
+            {
+                angle += 360d;
+            }
 
             foreach (var item in page.Items)
             {
-                if (angle >= item.StartAngle || angle <= item.EndAngle)
+                if (item.StartAngle > item.EndAngle)
+                {
+                    if (angle <= item.EndAngle || angle >= item.StartAngle)
+                    {
+                        return item;
+                    }
+                }
+
+                if (angle >= item.StartAngle && angle <= item.EndAngle)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        private PageItem GetCurrentItem()
+        {
+            var hasPointer = isPointerVisible;
+            if (!hasPointer)
+            {
+                return null;
+            }
+
+            var page = currentPage;
+            if (page == null)
+            {
+                return null;
+            }
+
+            var angle = pointerAngle;
+            if (angle < 0d)
+            {
+                angle += 360d;
+            }
+
+            foreach (var item in page.Items)
+            {
+                if (item.StartAngle > item.EndAngle)
+                {
+                    if (angle <= item.EndAngle || angle >= item.StartAngle)
+                    {
+                        return item;
+                    }
+                }
+
+                if (angle >= item.StartAngle && angle <= item.EndAngle)
                 {
                     return item;
                 }

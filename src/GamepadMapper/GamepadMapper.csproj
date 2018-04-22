@@ -70,6 +70,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Wpf\HelpKeyTemplateSelector.cs" />
+    <Compile Include="Wpf\IsModConverter.cs" />
     <Compile Include="Wpf\RadialMenu.cs" />
     <Compile Include="Wpf\ReversibleStackPanel.cs" />
     <Page Include="Themes\Generic.xaml">
