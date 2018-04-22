@@ -128,6 +128,11 @@ namespace GamepadMapper.Infrastructure
                     return new SendCharacterActuator(sendc.Character, Keyboard);
                 case SendStringAction sendstr:
                     return new SendStringActuator(sendstr.String, Keyboard);
+                case SetPageAction setpage:
+                    return new DelegateAction(() =>
+                    {
+                        MenuController.SetPage(setpage.Page);
+                    });
                 default:
                     return new DelegateAction(() => { });
             }

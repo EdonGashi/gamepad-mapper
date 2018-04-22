@@ -1,0 +1,106 @@
+﻿# Deadzones
+deadzone.ls = 10%
+deadzone.rs = 10%
+deadzone.lt = 10%
+deadzone.rt = 10%
+
+# Buttons
+hold.duration       = 800   # Time needed for hold action
+repeat.delay        = 600   # Time before buttons repeat
+repeat.interval     = 50    # Interval between repeated characters
+
+# Mouse                
+mouse.speed         = 400   # Speed in pixels per second
+mouse.acceleration  = 1.3
+mouse.invertX       = false
+mouse.invertY       = false
+
+# Scrolling
+scroll.speed        = 1500
+scroll.acceleration = 1.5
+scroll.invertX      = false
+scroll.invertY      = false
+
+# Radial menu
+menu.minradius      = 50%   # Minimum stick distance to show menu pointer
+menu.smoothing      = 100   # Smoothing sample time
+menu.invertX        = false
+menu.invertY        = false
+
+# Initial profile
+profile.current     = Default
+
+profile Default
+    LS              = map   MOUSE
+    RS              = map   SCROLL
+    A               = map   LBUTTON
+    B               = press ESCAPE           hold   MENU+F4
+    X               = press RETURN           repeat
+    Y               = map   RBUTTON
+    DPadLeft        = press LEFT             repeat
+    DPadUp          = press UP               repeat
+    DPadRight       = press RIGHT            repeat
+    DPadDown        = press DOWN             repeat
+    LB              = press show(menu_main)
+    RB              = map   MOD
+    LT              = press BACK             repeat
+    RT              = press SPACE            repeat
+    Back            = press CONTROL+MENU+TAB hold   MENU+TAB
+    Start           = press LWIN             hold   LWIN+VK_D
+    LSB             = map   MBUTTON
+    RSB             = press HOME
+    ModA            = map   LBUTTON
+    ModB            = press DELETE           repeat
+    ModX            = press CONTROL+TAB      hold   CONTROL+SHIFT+TAB
+    ModY            = press CONTROL+VK_T     hold   CONTROL+VK_W
+    ModDPadLeft     = press MENU+LEFT        repeat
+    ModDPadUp       = press VOLUME_UP        repeat
+    ModDPadRight    = press MENU+RIGHT       repeat
+    ModDPadDown     = press VOLUME_DOWN      repeat
+    ModLB           = press show(menu_keyboard)
+    ModLT           = press CONTROL+VK_Z     repeat
+    ModRT           = press CONTROL+VK_Y     repeat
+    ModBack         = press VK_F             hold   BROWSER_REFRESH
+    ModStart        = press LWIN+VK_E        hold   CONTROL+SHIFT+ESCAPE
+    ModLSB          = map   MBUTTON
+    ModRSB          = press END
+end profile
+
+profile Menu
+    LS              = map   RADIAL_MENU
+    RS              = map   MOUSE
+    A               = press command(menu_a)
+    B               = press command(menu_b)
+    X               = press command(menu_x)
+    Y               = press command(menu_y)
+    LB              = press command(menu_lb)
+    RB              = press command(menu_rb)
+    LT              = press command(menu_decrement) repeat
+    RT              = press command(menu_increment) repeat
+    DPadLeft        = press command(menu_prev_item) repeat
+    DPadUp          = press command(menu_next_page)
+    DPadRight       = press command(menu_next_item) repeat
+    DPadDown        = press command(menu_prev_page)
+    Back            = press command(menu_back)
+    Start           = press command(menu_exit)
+    LSB             = press command(menu_focus)
+    RSB             = map   LBUTTON
+end profile
+
+# Global command bindings
+bind menu_lb = command(menu_exit)
+bind menu_rb = command(menu_next_page)
+bind menu_a  = command(menu_enter)
+bind menu_b  = command(menu_back)
+bind menu_x  = command(menu_custom_1)
+bind menu_y  = command(menu_custom_2)
+
+define button_enter     = A
+define button_back      = B
+define button_custom_1  = X
+define button_custom_2  = Y
+define button_increment = RT
+define button_decrement = LT
+
+include menu_main.txt
+include menu_keyboard.txt

@@ -187,7 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="InputSimulatorPlus">
-      <Version>1.0.6</Version>
+      <Version>1.0.7</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks.Material">
       <Version>2.2.0</Version>
@@ -199,7 +199,17 @@
       <Version>3.3.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="config.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="menu_keyboard.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="menu_main.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)src\XInputDotNet\Binaries$(PlatformName)\$(ConfigurationName)\XInputInterface.dll" "$(TargetDir)" /f /r /y</PostBuildEvent>

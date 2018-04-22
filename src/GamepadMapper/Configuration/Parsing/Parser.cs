@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using System.Windows.Controls;
 using WindowsInput.Native;
 using GamepadMapper.Input;
 
@@ -71,6 +71,7 @@ namespace GamepadMapper.Configuration.Parsing
                         if (tokens.Length < 3 || token1 != "=")
                         {
                             logger?.WriteLine($"Error: Malformed line at {stream.Path}:{stream.Line}.");
+                            stream.Move();
                             break;
                         }
 
@@ -118,6 +119,7 @@ namespace GamepadMapper.Configuration.Parsing
             }
 
             HelpConfiguration help = null;
+            HelpConfiguration help2 = null;
             var bindings = new List<CommandBinding>();
             var pages = new List<PageConfiguration>();
             while (true)
@@ -146,6 +148,15 @@ namespace GamepadMapper.Configuration.Parsing
                         }
 
                         continue;
+                    case "help2":
+                        var h2 = ParseHelp(stream, logger, "2");
+                        if (h2 != null)
+                        {
+                            h2.Orientation = Orientation.Horizontal;
+                            help2 = h2;
+                        }
+
+                        continue;
                     case "page":
                         var page = ParsePage(stream, logger);
                         if (page != null)
@@ -160,7 +171,7 @@ namespace GamepadMapper.Configuration.Parsing
                 }
             }
 
-            return name != null ? new MenuConfiguration(name, help, bindings, pages) : null;
+            return name != null ? new MenuConfiguration(name, help, help2, bindings, pages) : null;
         }
 
         public static PageConfiguration ParsePage(ITokenStream stream, ILogger logger)
@@ -171,6 +182,8 @@ namespace GamepadMapper.Configuration.Parsing
             }
 
             HelpConfiguration help = null;
+            HelpConfiguration help2 = null;
+            var bindings = new List<CommandBinding>();
             var items = new List<MenuItemConfiguration>();
             while (true)
             {
@@ -189,6 +202,24 @@ namespace GamepadMapper.Configuration.Parsing
                         }
 
                         continue;
+                    case "bind":
+                        var binding = ParseCommandBinding(stream, logger);
+                        if (binding != null)
+                        {
+                            bindings.Add(binding);
+                        }
+
+                        stream.Move();
+                        continue;
+                    case "help2":
+                        var h2 = ParseHelp(stream, logger, "2");
+                        if (h2 != null)
+                        {
+                            h2.Orientation = Orientation.Horizontal;
+                            help2 = h2;
+                        }
+
+                        continue;
                     case "item":
                         var item = ParseMenuItem(stream, logger);
                         if (item != null)
@@ -203,7 +234,7 @@ namespace GamepadMapper.Configuration.Parsing
                 }
             }
 
-            return new PageConfiguration(help, items);
+            return new PageConfiguration(help, help2, bindings, items);
         }
 
         public static MenuItemConfiguration ParseMenuItem(ITokenStream stream, ILogger logger)
@@ -214,6 +245,7 @@ namespace GamepadMapper.Configuration.Parsing
             }
 
             HelpConfiguration help = null;
+            HelpConfiguration help2 = null;
             var bindings = new List<CommandBinding>();
             string name = null;
             string text = null;
@@ -231,6 +263,18 @@ namespace GamepadMapper.Configuration.Parsing
                     if (h != null)
                     {
                         help = h;
+                    }
+
+                    continue;
+                }
+
+                if (token0 == "help2")
+                {
+                    var h2 = ParseHelp(stream, logger, "2");
+                    if (h2 != null)
+                    {
+                        h2.Orientation = Orientation.Horizontal;
+                        help2 = h2;
                     }
 
                     continue;
@@ -269,18 +313,20 @@ namespace GamepadMapper.Configuration.Parsing
                         break;
                     default:
                         logger?.UnexpectedLine(stream);
+                        stream.Move();
                         break;
                 }
 
                 stream.Move();
             }
 
-            return new MenuItemConfiguration(name, icon, text, bindings, help);
+            return new MenuItemConfiguration(name, icon, text, bindings, help, help2);
         }
 
-        public static HelpConfiguration ParseHelp(ITokenStream stream, ILogger logger)
+        public static HelpConfiguration ParseHelp(ITokenStream stream, ILogger logger, string suffix = "")
         {
-            if (!stream.Starts("help"))
+            var key = "help" + suffix;
+            if (!stream.Starts(key))
             {
                 return null;
             }
@@ -289,7 +335,7 @@ namespace GamepadMapper.Configuration.Parsing
             var inputHelpTexts = new List<InputHelpText>();
             while (true)
             {
-                if (stream.Ends("help", logger, out var row, out var token0))
+                if (stream.Ends(key, logger, out var row, out var token0))
                 {
                     break;
                 }
@@ -744,6 +790,10 @@ namespace GamepadMapper.Configuration.Parsing
                     return args.Count >= 1 && args[0].Length == 1 ? new SendCharacterAction(args[0][0]) : null;
                 case "sendstr":
                     return args.Count >= 1 ? new SendStringAction(args[0]) : null;
+                case "setpage":
+                    return args.Count >= 1 && int.TryParse(args[0], out var page) && page > 0
+                        ? new SetPageAction(page)
+                        : null;
                 default:
                     return null;
             }

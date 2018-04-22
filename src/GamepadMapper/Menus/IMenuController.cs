@@ -23,6 +23,8 @@ namespace GamepadMapper.Menus
 
         HelpConfiguration HelpScreen { get; }
 
+        HelpConfiguration HelpScreen2 { get; }
+
         void Show(string menu);
 
         void Back();
@@ -34,6 +36,8 @@ namespace GamepadMapper.Menus
         void NextItem();
 
         void PreviousItem();
+
+        void SetPage(int page);
 
         void Exit();
 

@@ -1,4 +1,5 @@
-﻿using WindowsInput;
+﻿using System;
+using WindowsInput;
 
 namespace GamepadMapper.Actuators
 {
@@ -13,7 +14,8 @@ namespace GamepadMapper.Actuators
 
         public void Move(double x, double y)
         {
-            // TODO: Input simulator does not support fine scrolling
+            MouseSimulator.VerticalScroll(-(int)Math.Round(y));
+            MouseSimulator.HorizontalScroll((int)Math.Round(x));
         }
     }
 }

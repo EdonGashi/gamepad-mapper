@@ -190,24 +190,24 @@ namespace GamepadMapper.Configuration
             Add(new ConfigDescriptor("scroll.speed")
             {
                 GetValue = () => Scroll.Speed,
-                SetValue = val => Scroll.Speed = Clamp(val, 50d, 1000d, 200d),
-                IsValidValue = val => IsValid(val, 50d, 1000d),
+                SetValue = val => Scroll.Speed = Clamp(val, 50d, 3000d, 1500d),
+                IsValidValue = val => IsValid(val, 50d, 3000d),
                 FormatValue = () => Scroll.Speed.ToString(),
-                Increment = () => Scroll.Speed = Clamp(Scroll.Speed + 50d, 50d, 1000d),
-                Decrement = () => Scroll.Speed = Clamp(Scroll.Speed - 50d, 50d, 1000d),
-                Toggle = () => Scroll.Speed = Toggle(Scroll.Speed, 100d, 200d, 300d, 400d),
-                Reset = () => Scroll.Speed = 200d
+                Increment = () => Scroll.Speed = Clamp(Scroll.Speed + 50d, 200d, 3000d),
+                Decrement = () => Scroll.Speed = Clamp(Scroll.Speed - 50d, 200d, 3000d),
+                Toggle = () => Scroll.Speed = Toggle(Scroll.Speed, 1000d, 1500d, 2000d),
+                Reset = () => Scroll.Speed = 1500d
             });
             Add(new ConfigDescriptor("scroll.acceleration")
             {
                 GetValue = () => Scroll.Acceleration,
-                SetValue = val => Scroll.Acceleration = Clamp(val, 1d, 2d, 1.3d),
+                SetValue = val => Scroll.Acceleration = Clamp(val, 1d, 2d, 1.5d),
                 IsValidValue = val => IsValid(val, 1d, 2d),
                 FormatValue = () => Scroll.Acceleration.ToString(),
                 Increment = () => Scroll.Acceleration = Clamp(Scroll.Acceleration + 0.1d, 1d, 2d),
                 Decrement = () => Scroll.Acceleration = Clamp(Scroll.Acceleration - 0.1d, 1d, 2d),
-                Toggle = () => Scroll.Acceleration = Toggle(Scroll.Acceleration, 1d, 1.3d, 1.6d),
-                Reset = () => Scroll.Acceleration = 1.3d
+                Toggle = () => Scroll.Acceleration = Toggle(Scroll.Acceleration, 1d, 1.5d, 2d),
+                Reset = () => Scroll.Acceleration = 1.5d
             });
             Add(new ConfigDescriptor("scroll.invertx")
             {
@@ -245,13 +245,13 @@ namespace GamepadMapper.Configuration
             Add(new ConfigDescriptor("menu.smoothing")
             {
                 GetValue = () => Menu.Smoothing,
-                SetValue = val => Menu.Smoothing = Clamp(val, 0d, 500d, 150d),
+                SetValue = val => Menu.Smoothing = Clamp(val, 0d, 500d, 100d),
                 IsValidValue = val => IsValid(val, 0d, 500d),
                 FormatValue = () => Menu.Smoothing.ToString(),
                 Increment = () => Menu.Smoothing = Clamp(Menu.Smoothing + 10d, 0d, 500d),
                 Decrement = () => Menu.Smoothing = Clamp(Menu.Smoothing - 10d, 0d, 500d),
-                Toggle = () => Menu.Smoothing = Toggle(Menu.Smoothing, 0d, 50d, 100d, 150d, 200d),
-                Reset = () => Menu.Smoothing = 150d
+                Toggle = () => Menu.Smoothing = Toggle(Menu.Smoothing, 0d, 25d, 50d, 100d, 150d),
+                Reset = () => Menu.Smoothing = 100d
             });
             Add(new ConfigDescriptor("menu.invertx")
             {

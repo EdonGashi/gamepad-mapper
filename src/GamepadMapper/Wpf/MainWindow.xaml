@@ -26,6 +26,7 @@
             PointerAngle="{Binding PointerAngle}"
             IsPointerVisible="{Binding IsPointerVisible}"
             HelpScreen="{Binding HelpScreen}"
+            HelpScreen2="{Binding HelpScreen2}"
             CurrentPage="{Binding CurrentPage}"
             CurrentItem="{Binding CurrentItem}"
             PointerWidth="{Binding PointerWidth}"

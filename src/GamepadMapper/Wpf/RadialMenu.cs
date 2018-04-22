@@ -87,6 +87,12 @@ namespace GamepadMapper.Wpf
                 typeof(RadialMenu),
                 new PropertyMetadata(null));
 
+        public static readonly DependencyProperty HelpScreen2Property =
+            DependencyProperty.Register("HelpScreen2",
+                typeof(HelpConfiguration),
+                typeof(RadialMenu),
+                new PropertyMetadata(null));
+
         public static readonly DependencyProperty CurrentItemProperty =
             DependencyProperty.Register("CurrentItem",
                 typeof(PageItem),
@@ -115,6 +121,12 @@ namespace GamepadMapper.Wpf
         {
             get => (HelpConfiguration)GetValue(HelpScreenProperty);
             set => SetValue(HelpScreenProperty, value);
+        }
+
+        public HelpConfiguration HelpScreen2
+        {
+            get => (HelpConfiguration)GetValue(HelpScreen2Property);
+            set => SetValue(HelpScreen2Property, value);
         }
 
         public bool IsPointerVisible

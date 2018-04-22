@@ -1,0 +1,42 @@
+﻿menu menu_main
+    help
+	    LS = Select item
+		RS = mouse
+		DPadHorizontal = Cycle items
+	end help
+	help2
+		LB = Close menu
+	end help2
+    page
+	    item
+		    name = Keyboard
+			icon = Keyboard
+			text = Radial keyboard
+			help
+			    $button_enter = Open keyboard
+			end help
+			bind menu_enter = show(menu_keyboard)
+		end item
+	    item
+		    name = Settings
+			icon = Settings
+			text = Configure parameters
+			help
+			    $button_enter = Open settings
+			end help
+			bind menu_enter = show(menu_settings)
+		end item
+	end page
+end menu
+
+menu menu_settings
+    help
+	    $button_back = Back
+	    LS = Select item
+		RS = mouse
+		DPadHorizontal = Cycle items
+	end help
+	help2
+		LB = Close menu
+	end help2
+end menu

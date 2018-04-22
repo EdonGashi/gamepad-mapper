@@ -35,6 +35,7 @@
                             <iconPacks:PackIconMaterial
                                 Width="32"
                                 Height="32"
+                                HorizontalAlignment="Center"
                                 Kind="{Binding Kind}" />
                         </DataTemplate>
                     </wpf:IconTemplateSelector.MaterialIcon>
@@ -42,32 +43,43 @@
                         <DataTemplate DataType="{x:Type menus:TextIcon}">
                             <TextBlock
                                 Padding="0"
+                                HorizontalAlignment="Center"
                                 FontSize="34"
+                                FontWeight="Bold"
                                 LineHeight="30"
                                 LineStackingStrategy="BlockLineHeight"
-                                FontWeight="Bold"
-                                Text="{Binding Text}" />
+                                Text="{Binding Text}"
+                                TextAlignment="Center" />
                         </DataTemplate>
                     </wpf:IconTemplateSelector.TextIcon>
                     <wpf:IconTemplateSelector.CompositeIcon>
                         <DataTemplate DataType="{x:Type menus:CompositeIcon}">
-                            <DockPanel MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
+                            <DockPanel
+                                MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                                HorizontalAlignment="Center">
                                 <ContentPresenter
+                                    MinWidth="{Binding ActualWidth, ElementName=RightIcon}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
                                     Content="{Binding Icon2}"
                                     DockPanel.Dock="Top" />
                                 <ContentPresenter
+                                    MinWidth="{Binding ActualWidth, ElementName=LeftIcon}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom"
                                     Content="{Binding Icon4}"
                                     DockPanel.Dock="Bottom" />
                                 <ContentPresenter
+                                    x:Name="LeftIcon"
+                                    MinWidth="{Binding ActualWidth, ElementName=RightIcon}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Content="{Binding Icon1}"
                                     DockPanel.Dock="Left" />
                                 <ContentPresenter
+                                    x:Name="RightIcon"
+                                    MinWidth="{Binding ActualWidth, ElementName=LeftIcon}"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Content="{Binding Icon3}"
@@ -568,11 +580,16 @@
                 FontSize="15"
                 Foreground="#FFFFFFFF"
                 ItemsSource="{Binding InputHelpTexts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="{Binding Orientation}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border
                             Margin="4"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             Background="#AA000000"
                             CornerRadius="8">
                             <StackPanel Margin="8" Orientation="Horizontal">
@@ -608,9 +625,39 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type wpf:RadialMenu}">
-                    <wpf:ReversibleStackPanel Orientation="Horizontal" ReverseOrder="True">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter
+                            x:Name="HelpScreen2"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            MaxWidth="360"
+                            Margin="0,0,0,8"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Content="{TemplateBinding HelpScreen2}"
+                            Opacity="0" />
+                        <ContentPresenter
+                            x:Name="HelpScreen"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,0,8,0"
+                            MinWidth="160"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Content="{TemplateBinding HelpScreen}"
+                            Opacity="0" />
                         <Canvas
                             x:Name="Canvas"
+                            Grid.Row="1"
+                            Grid.Column="1"
                             Width="360"
                             Height="360"
                             RenderTransformOrigin="0.5,0.5">
@@ -620,6 +667,46 @@
                                     RadiusX="180"
                                     RadiusY="180" />
                             </Canvas.Clip>
+                            <ContentPresenter
+                                x:Name="CenterContent"
+                                Canvas.Left="65"
+                                Canvas.Top="65"
+                                Width="230"
+                                Height="230"
+                                Content="{TemplateBinding CurrentItem}"
+                                Opacity="0">
+                                <ContentPresenter.Clip>
+                                    <EllipseGeometry
+                                        Center="115,115"
+                                        RadiusX="115"
+                                        RadiusY="115" />
+                                </ContentPresenter.Clip>
+                                <ContentPresenter.ContentTemplate>
+                                    <DataTemplate DataType="{x:Type menus:PageItem}">
+                                        <Border Padding="8" Background="#AA222222">
+                                            <Grid
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                TextElement.Foreground="White">
+                                                <Viewbox
+                                                    Width="120"
+                                                    Height="120"
+                                                    Stretch="Uniform">
+                                                    <ContentPresenter Content="{Binding Icon}" />
+                                                </Viewbox>
+                                                <TextBlock
+                                                    MaxWidth="200"
+                                                    Text="{Binding Title}"
+                                                    TextWrapping="Wrap" />
+                                                <TextBlock
+                                                    MaxWidth="180"
+                                                    Text="{Binding Description}"
+                                                    TextWrapping="Wrap" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ContentPresenter.ContentTemplate>
+                            </ContentPresenter>
                             <ed:Arc
                                 x:Name="MenuCircle"
                                 Width="360"
@@ -727,13 +814,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </Canvas>
-                        <ContentPresenter
-                            x:Name="HelpScreen"
-                            Margin="8"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Content="{TemplateBinding HelpScreen}" />
-                    </wpf:ReversibleStackPanel>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsOpen" Value="True">
                             <Trigger.EnterActions>
@@ -767,6 +848,20 @@
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HelpScreen2" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CenterContent" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -795,6 +890,20 @@
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HelpScreen" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HelpScreen2" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CenterContent" Storyboard.TargetProperty="Opacity">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
                                                 <EasingDoubleKeyFrame.EasingFunction>
                                                     <QuadraticEase EasingMode="EaseOut" />

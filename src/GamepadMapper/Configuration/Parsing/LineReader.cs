@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Windows;
 
 namespace GamepadMapper.Configuration.Parsing
 {
@@ -82,6 +84,7 @@ namespace GamepadMapper.Configuration.Parsing
     public class FileLogger : ILogger, IDisposable
     {
         private StreamWriter streamWriter;
+        private int lineNumber;
 
         public FileLogger()
         {
@@ -95,6 +98,14 @@ namespace GamepadMapper.Configuration.Parsing
             if (streamWriter == null)
             {
                 streamWriter = new StreamWriter(Path);
+            }
+
+            if (lineNumber++ > 100_000)
+            {
+                // Sometimes the parser can get in an infinite loop.
+                // Until that is fixed this will prevent gigantic log files.
+                Application.Current?.Shutdown();
+                return;
             }
 
             streamWriter.WriteLine(line);

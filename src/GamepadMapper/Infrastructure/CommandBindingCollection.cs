@@ -22,6 +22,11 @@ namespace GamepadMapper.Infrastructure
 
         public CommandBindingCollection(IDictionary<string, IAction> bindings)
         {
+            if (bindings == null)
+            {
+                return;
+            }
+
             var dict = new Dictionary<string, IAction>(StringComparer.OrdinalIgnoreCase);
             foreach (var pair in bindings)
             {
@@ -35,7 +40,7 @@ namespace GamepadMapper.Infrastructure
 
         public bool TryDispatch(string command)
         {
-            if (Bindings.TryGetValue(command, out var action))
+            if (Bindings != null && Bindings.TryGetValue(command, out var action))
             {
                 try
                 {

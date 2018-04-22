@@ -1,0 +1,416 @@
+﻿menu menu_keyboard
+    bind menu_decrement   = BACK
+    bind menu_increment   = SPACE
+    bind menu_custom_1    = RETURN
+    bind menu_custom_2    = DELETE
+    bind menu_enter       = LBUTTON
+    help
+        $button_enter     = Left click
+        $button_back      = Close
+        $button_custom_1  = Enter
+        $button_custom_2  = Delete
+        $button_decrement = Backspace
+        $button_increment = Space
+        RS                = Mouse
+    end help
+    help2
+        LB                = Numbers
+        RB                = Caps
+    end help2
+    page
+        bind menu_lb = setpage(3)
+        bind menu_rb = setpage(2)
+        item
+            help
+                A                 = d
+                B                 = c
+                X                 = a
+                Y                 = b
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "a" "b" "c" "d"
+            bind menu_x = sendchar("a")
+            bind menu_y = sendchar("b")
+            bind menu_b = sendchar("c")
+            bind menu_a = sendchar("d")
+        end item
+        item
+            help
+                A                 = h
+                B                 = g
+                X                 = e
+                Y                 = f
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "e" "f" "g" "h"
+            bind menu_x = sendchar("e")
+            bind menu_y = sendchar("f")
+            bind menu_b = sendchar("g")
+            bind menu_a = sendchar("h")
+        end item
+        item
+            help
+                A                 = l
+                B                 = k
+                X                 = i
+                Y                 = j
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "i" "j" "k" "l"
+            bind menu_x = sendchar("i")
+            bind menu_y = sendchar("j")
+            bind menu_b = sendchar("k")
+            bind menu_a = sendchar("l")
+        end item
+        item
+            help
+                A                 = p
+                B                 = o
+                X                 = m
+                Y                 = n
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "m" "n" "o" "p"
+            bind menu_x = sendchar("m")
+            bind menu_y = sendchar("n")
+            bind menu_b = sendchar("o")
+            bind menu_a = sendchar("p")
+        end item
+        item
+            help
+                A                 = t
+                B                 = s
+                X                 = q
+                Y                 = r
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "q" "r" "s" "t"
+            bind menu_x = sendchar("q")
+            bind menu_y = sendchar("r")
+            bind menu_b = sendchar("s")
+            bind menu_a = sendchar("t")
+        end item
+        item
+            help
+                A                 = x
+                B                 = w
+                X                 = u
+                Y                 = v
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "u" "v" "w" "x"
+            bind menu_x = sendchar("u")
+            bind menu_y = sendchar("v")
+            bind menu_b = sendchar("w")
+            bind menu_a = sendchar("x")
+        end item
+        item
+            help
+                A                 = .
+                B                 = ,
+                X                 = y
+                Y                 = z
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "y" "z" "," "."
+            bind menu_x = sendchar("y")
+            bind menu_y = sendchar("z")
+            bind menu_b = sendchar(",")
+            bind menu_a = sendchar(".")
+        end item
+        item
+            help
+                A                 = _
+                B                 = @
+                X                 = :
+                Y                 = /
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = ":" "/" "@" "_"
+            bind menu_x = sendchar(":")
+            bind menu_y = sendchar("/")
+            bind menu_b = sendchar("@")
+            bind menu_a = sendchar("_")
+        end item
+    end page
+    page
+        bind menu_lb = setpage(3)
+        bind menu_rb = setpage(1)
+        item
+            help
+                A                 = D
+                B                 = C
+                X                 = A
+                Y                 = B
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "A" "B" "C" "D"
+            bind menu_x = sendchar("A")
+            bind menu_y = sendchar("B")
+            bind menu_b = sendchar("C")
+            bind menu_a = sendchar("D")
+        end item
+        item
+            help
+                A                 = H
+                B                 = G
+                X                 = E
+                Y                 = F
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "E" "F" "G" "H"
+            bind menu_x = sendchar("E")
+            bind menu_y = sendchar("F")
+            bind menu_b = sendchar("G")
+            bind menu_a = sendchar("H")
+        end item
+        item
+            help
+                A                 = L
+                B                 = K
+                X                 = I
+                Y                 = J
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "I" "J" "K" "L"
+            bind menu_x = sendchar("I")
+            bind menu_y = sendchar("J")
+            bind menu_b = sendchar("K")
+            bind menu_a = sendchar("L")
+        end item
+        item
+            help
+                A                 = P
+                B                 = O
+                X                 = M
+                Y                 = N
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "M" "N" "O" "P"
+            bind menu_x = sendchar("M")
+            bind menu_y = sendchar("N")
+            bind menu_b = sendchar("O")
+            bind menu_a = sendchar("P")
+        end item
+        item
+            help
+                A                 = T
+                B                 = S
+                X                 = Q
+                Y                 = R
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "Q" "R" "S" "T"
+            bind menu_x = sendchar("Q")
+            bind menu_y = sendchar("R")
+            bind menu_b = sendchar("S")
+            bind menu_a = sendchar("T")
+        end item
+        item
+            help
+                A                 = X
+                B                 = W
+                X                 = U
+                Y                 = V
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "U" "V" "W" "X"
+            bind menu_x = sendchar("U")
+            bind menu_y = sendchar("V")
+            bind menu_b = sendchar("W")
+            bind menu_a = sendchar("X")
+        end item
+        item
+            help
+                A                 = !
+                B                 = ?
+                X                 = Y
+                Y                 = Z
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "Y" "Z" "?" "!"
+            bind menu_x = sendchar("Y")
+            bind menu_y = sendchar("Z")
+            bind menu_b = sendchar("?")
+            bind menu_a = sendchar("!")
+        end item
+        item
+            help
+                A                 = _
+                B                 = &
+                X                 = ;
+                Y                 = \
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = ";" "\" "&" "_"
+            bind menu_x = sendchar(";")
+            bind menu_y = sendchar("\")
+            bind menu_b = sendchar("&")
+            bind menu_a = sendchar("_")
+        end item
+    end page
+    page
+        bind menu_lb = setpage(1)
+        bind menu_rb = setpage(2)
+        item
+            help
+                A                 = 4
+                B                 = 3
+                X                 = 1
+                Y                 = 2
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "1" "2" "3" "4"
+            bind menu_x = sendchar("1")
+            bind menu_y = sendchar("2")
+            bind menu_b = sendchar("3")
+            bind menu_a = sendchar("4")
+        end item
+        item
+            help
+                A                 = 8
+                B                 = 7
+                X                 = 5
+                Y                 = 6
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "5" "6" "7" "8"
+            bind menu_x = sendchar("5")
+            bind menu_y = sendchar("6")
+            bind menu_b = sendchar("7")
+            bind menu_a = sendchar("8")
+        end item
+        item
+            help
+                A                 = +
+                B                 = *
+                X                 = 9
+                Y                 = 0
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "9" "0" "*" "+"
+            bind menu_x = sendchar("9")
+            bind menu_y = sendchar("0")
+            bind menu_b = sendchar("*")
+            bind menu_a = sendchar("+")
+        end item
+        item
+            help
+                A                 = `
+                B                 = "$"
+                X                 = £
+                Y                 = €
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "£" "€" "$" "`"
+            bind menu_x = sendchar("£")
+            bind menu_y = sendchar("€")
+            bind menu_b = sendchar("$")
+            bind menu_a = sendchar("`")
+        end item
+        item
+            help
+                A                 = |
+                B                 = ~
+                X                 = '
+                Y                 = """"
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "'" """" "~" "|"
+            bind menu_x = sendchar("'")
+            bind menu_y = sendchar("""")
+            bind menu_b = sendchar("~")
+            bind menu_a = sendchar("|")
+        end item
+        item
+            help
+                A                 = ^
+                B                 = %
+                X                 = "="
+                Y                 = "#"
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "=" "#" "%" "^"
+            bind menu_x = sendchar("=")
+            bind menu_y = sendchar("#")
+            bind menu_b = sendchar("%")
+            bind menu_a = sendchar("^")
+        end item
+        item
+            help
+                A                 = ]
+                B                 = [
+                X                 = <
+                Y                 = >
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "<" ">" "[" "]"
+            bind menu_x = sendchar("<")
+            bind menu_y = sendchar(">")
+            bind menu_b = sendchar("[")
+            bind menu_a = sendchar("]")
+        end item
+        item
+            help
+                A                 = ")"
+                B                 = "("
+                X                 = {
+                Y                 = }
+                $button_decrement = Backspace
+                $button_increment = Space
+                RS                = Mouse
+            end help
+            icon        = "{" "}" "(" ")"
+            bind menu_x = sendchar("{")
+            bind menu_y = sendchar("}")
+            bind menu_b = sendchar("(")
+            bind menu_a = sendchar(")")
+        end item
+    end page
+end menu

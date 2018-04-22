@@ -22,6 +22,8 @@ namespace GamepadMapper.Infrastructure
         public override void Load()
         {
             var simulator = new InputSimulator();
+            simulator.Mouse.MouseWheelClickSize = 1;
+
             Bind<IInputSimulator>().ToConstant(simulator);
             Bind<IKeyboardSimulator>().ToConstant(simulator.Keyboard);
             Bind<IMouseSimulator>().ToConstant(simulator.Mouse);

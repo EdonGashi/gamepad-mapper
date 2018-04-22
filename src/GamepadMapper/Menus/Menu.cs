@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using GamepadMapper.Configuration;
 using GamepadMapper.Configuration.Parsing;
 using GamepadMapper.Infrastructure;
@@ -10,27 +12,39 @@ using MahApps.Metro.IconPacks;
 
 namespace GamepadMapper.Menus
 {
-    public class Menu
+    public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class Menu : NotifyPropertyChangedBase
     {
         public static Menu FromConfig(MenuConfiguration config, IActionFactory actionFactory)
         {
             return new Menu(
                 CommandBindingCollection.FromCollection(config.CommandBindings, actionFactory),
                 config.Pages.Select((p, i) => MenuPage.FromConfig(p, i, actionFactory)),
-                config.Help);
+                config.Help,
+                config.Help2);
         }
 
-        public Menu(CommandBindingCollection commandBindings, IEnumerable<MenuPage> pages, HelpConfiguration helpScreen)
+        public Menu(CommandBindingCollection commandBindings, IEnumerable<MenuPage> pages, HelpConfiguration helpScreen, HelpConfiguration helpScreen2)
         {
             CommandBindings = commandBindings;
             var pagesList = pages?.ToList() ?? new List<MenuPage>();
             if (pagesList.Count == 0)
             {
-                pagesList.Add(new MenuPage(0, null, null));
+                pagesList.Add(new MenuPage(0, null, null, null, null));
             }
 
             Pages = pagesList;
             HelpScreen = helpScreen;
+            HelpScreen2 = helpScreen2;
         }
 
         public CommandBindingCollection CommandBindings { get; }
@@ -38,28 +52,43 @@ namespace GamepadMapper.Menus
         public IReadOnlyList<MenuPage> Pages { get; }
 
         public HelpConfiguration HelpScreen { get; }
+
+        public HelpConfiguration HelpScreen2 { get; }
     }
 
-    public class MenuPage : IEnumerable<PageItem>
+    public class MenuPage : NotifyPropertyChangedBase, IEnumerable<PageItem>
     {
         public static MenuPage FromConfig(PageConfiguration config, int index, IActionFactory actionFactory)
         {
             return new MenuPage(
                 index,
                 config.Help,
+                config.Help2,
+                CommandBindingCollection.FromCollection(config.CommandBindings, actionFactory),
                 config.Items.Select((item, i) => PageItem.FromConfig(item, i, config.Items.Count, actionFactory)));
         }
 
-        public MenuPage(int index, HelpConfiguration helpScreen, IEnumerable<PageItem> items)
+        public MenuPage(
+            int index, 
+            HelpConfiguration helpScreen, 
+            HelpConfiguration helpScreen2,
+            CommandBindingCollection commandBindings, 
+            IEnumerable<PageItem> items)
         {
             Index = index;
             HelpScreen = helpScreen;
+            HelpScreen2 = helpScreen2;
+            CommandBindings = commandBindings ?? new CommandBindingCollection(null);
             Items = items?.ToList() ?? new List<PageItem>();
         }
 
         public int Index { get; }
 
         public HelpConfiguration HelpScreen { get; }
+
+        public HelpConfiguration HelpScreen2 { get; }
+
+        public CommandBindingCollection CommandBindings { get; }
 
         public IReadOnlyList<PageItem> Items { get; }
 
@@ -68,7 +97,7 @@ namespace GamepadMapper.Menus
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class PageItem
+    public class PageItem : NotifyPropertyChangedBase
     {
         public const double AngleStart = 0d;
 
@@ -77,6 +106,7 @@ namespace GamepadMapper.Menus
             return new PageItem(index, totalItems,
                  CommandBindingCollection.FromCollection(config.CommandBindings, actionFactory),
                  config.Help,
+                 config.Help2,
                  IconBase.FromTokens(config.Icon),
                  config.Name,
                  config.Text);
@@ -92,6 +122,7 @@ namespace GamepadMapper.Menus
             int totalItems,
             CommandBindingCollection commandBindings,
             HelpConfiguration helpScreen,
+            HelpConfiguration helpScreen2,
             IconBase icon,
             string title,
             string description)
@@ -110,6 +141,7 @@ namespace GamepadMapper.Menus
 
             CommandBindings = commandBindings;
             HelpScreen = helpScreen;
+            HelpScreen2 = helpScreen2;
             Icon = icon;
             Title = title;
             Description = description;
@@ -132,9 +164,11 @@ namespace GamepadMapper.Menus
         public CommandBindingCollection CommandBindings { get; }
 
         public HelpConfiguration HelpScreen { get; }
+
+        public HelpConfiguration HelpScreen2 { get; }
     }
 
-    public abstract class IconBase
+    public abstract class IconBase : NotifyPropertyChangedBase
     {
         public static IconBase FromTokens(IReadOnlyList<Token> tokens)
         {
@@ -159,12 +193,32 @@ namespace GamepadMapper.Menus
                 case 1:
                     return Read();
                 case 2:
-                    return new CompositeIcon(Read(), Read(), MaterialIcon.None, MaterialIcon.None);
+                    return new CompositeIcon(
+                        Read().WithAlignment(HorizontalAlignment.Left),
+                        Read(),
+                        MaterialIcon.None.WithAlignment(HorizontalAlignment.Right),
+                        MaterialIcon.None);
                 case 3:
-                    return new CompositeIcon(Read(), Read(), Read(), MaterialIcon.None);
+                    return new CompositeIcon(
+                        Read().WithAlignment(HorizontalAlignment.Left),
+                        Read(),
+                        Read().WithAlignment(HorizontalAlignment.Right),
+                        MaterialIcon.None);
                 default:
-                    return new CompositeIcon(Read(), Read(), Read(), Read());
+                    return new CompositeIcon(
+                        Read().WithAlignment(HorizontalAlignment.Left),
+                        Read(),
+                        Read().WithAlignment(HorizontalAlignment.Right),
+                        Read());
             }
+        }
+
+        public HorizontalAlignment HorizontalAlignment { get; private set; } = HorizontalAlignment.Center;
+
+        public IconBase WithAlignment(HorizontalAlignment alignment)
+        {
+            HorizontalAlignment = alignment;
+            return this;
         }
     }
 

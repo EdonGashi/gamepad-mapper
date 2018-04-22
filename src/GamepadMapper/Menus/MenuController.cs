@@ -45,6 +45,7 @@ namespace GamepadMapper.Menus
         private static readonly PropertyChangedEventArgs CurrentItemChanged = new PropertyChangedEventArgs(nameof(CurrentItem));
         private static readonly PropertyChangedEventArgs PointerWidthChanged = new PropertyChangedEventArgs(nameof(PointerWidth));
         private static readonly PropertyChangedEventArgs HelpScreenChanged = new PropertyChangedEventArgs(nameof(HelpScreen));
+        private static readonly PropertyChangedEventArgs HelpScreen2Changed = new PropertyChangedEventArgs(nameof(HelpScreen2));
 
         public MenuController(RootConfiguration config, IActionFactoryFactory factory)
         {
@@ -86,6 +87,8 @@ namespace GamepadMapper.Menus
             : 180d;
 
         public HelpConfiguration HelpScreen => currentItem?.HelpScreen ?? currentPage?.HelpScreen ?? currentMenu?.HelpScreen;
+
+        public HelpConfiguration HelpScreen2 => currentItem?.HelpScreen2 ?? currentPage?.HelpScreen2 ?? currentMenu?.HelpScreen2;
 
         #endregion
 
@@ -138,6 +141,34 @@ namespace GamepadMapper.Menus
             itemFocused = false;
         }
 
+        public void SetPage(int page)
+        {
+            var menu = currentMenu;
+            if (menu == null || menu.Pages.Count == 1)
+            {
+                return;
+            }
+
+            var items = currentPage?.Items.Count ?? 0;
+            page--;
+            if (page >= 0 && page < menu.Pages.Count)
+            {
+                currentPage = menu.Pages[page];
+                if (currentPage.Items.Count == items)
+                {
+                    var item = currentItem;
+                    if (currentItem != null && itemFocused)
+                    {
+                        currentItem = currentPage.Items[item.Index];
+                    }
+                }
+                else
+                {
+                    itemFocused = false;
+                }
+            }
+        }
+
         public void PreviousPage()
         {
             var menu = currentMenu;
@@ -161,7 +192,7 @@ namespace GamepadMapper.Menus
         {
             var page = currentPage;
             var item = currentItem;
-            if (page == null)
+            if (page == null || page.Items.Count == 0)
             {
                 return;
             }
@@ -177,7 +208,7 @@ namespace GamepadMapper.Menus
         {
             var page = currentPage;
             var item = currentItem;
-            if (page == null)
+            if (page == null || page.Items.Count == 0)
             {
                 return;
             }
@@ -297,6 +328,7 @@ namespace GamepadMapper.Menus
             if (raiseHelp)
             {
                 Raise(HelpScreenChanged);
+                Raise(HelpScreen2Changed);
             }
         }
 
@@ -307,14 +339,19 @@ namespace GamepadMapper.Menus
                 return;
             }
 
-            var menu = currentMenu;
             var item = currentItem;
-
             if (item != null && item.CommandBindings.TryDispatch(command))
             {
                 return;
             }
 
+            var page = currentPage;
+            if (page != null && currentPage.CommandBindings.TryDispatch(command))
+            {
+                return;
+            }
+
+            var menu = currentMenu;
             if (menu != null && menu.CommandBindings.TryDispatch(command))
             {
                 return;
@@ -330,6 +367,12 @@ namespace GamepadMapper.Menus
             {
                 case "menu_back":
                 case "native_menu_back":
+                    if (itemFocused)
+                    {
+                        itemFocused = false;
+                        return;
+                    }
+
                     Back();
                     break;
                 case "menu_exit":
