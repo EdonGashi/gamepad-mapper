@@ -18,6 +18,30 @@
 			bind menu_enter = show(menu_keyboard)
 		end item
 	    item
+		    name = Favorites
+			icon = Star
+			text = Favorite shortcuts
+			help
+			    $button_enter = Open favorites
+			end help
+			bind menu_enter = show(menu_settings)
+		end item
+        item
+            icon                = VolumeHigh
+            name                = Volume
+            text                = Change system volume
+            bind menu_increment = VOLUME_UP
+            bind menu_decrement = VOLUME_DOWN
+            bind menu_custom_1  = VOLUME_MUTE
+			bind menu_enter     = command(menu_focus)
+            help
+                $button_increment = Increase
+                $button_decrement = Decrease
+                $button_custom_1  = Mute
+				$button_enter     = Focus
+            end help
+        end item
+	    item
 		    name = Settings
 			icon = Settings
 			text = Configure parameters
@@ -39,4 +63,25 @@ menu menu_settings
 	help2
 		LB = Close menu
 	end help2
+	page
+	    item
+		    icon = Mouse
+			name = Mouse Settings
+		end item
+	    item
+		    name = Scroll Settings
+		    icon = CursorMove
+			bind menu_enter     = command(menu_focus)
+			bind menu_increment = increment(mouse.speed)
+			bind menu_decrement = decrement(mouse.speed)
+		end item
+	    item
+		    name = Menu Position
+		    icon = MoveResizeVariant
+		end item
+	    item
+		    name = Profile
+		    icon = Account
+		end item
+	end page
 end menu

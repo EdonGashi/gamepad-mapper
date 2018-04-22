@@ -46,7 +46,7 @@ namespace GamepadMapper.Infrastructure
                     {
                         if (Config.Descriptors.TryGetValue(increment.Key, out var descriptor))
                         {
-                            descriptor.Decrement();
+                            descriptor.Increment();
                         }
                     });
                 case DecrementConfigurationAction decrement:
