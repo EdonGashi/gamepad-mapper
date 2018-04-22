@@ -70,9 +70,14 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actuators\SendStringActuator.cs" />
+    <Compile Include="Actuators\SendCharacterActuator.cs" />
+    <Compile Include="Wpf\IconTemplateSelector.cs" />
     <Compile Include="Wpf\HelpKeyTemplateSelector.cs" />
     <Compile Include="Wpf\IsModConverter.cs" />
+    <Compile Include="Wpf\PolarToRectangularConverter.cs" />
     <Compile Include="Wpf\RadialMenu.cs" />
+    <Compile Include="Wpf\IsFocusedConverter.cs" />
     <Compile Include="Wpf\ReversibleStackPanel.cs" />
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

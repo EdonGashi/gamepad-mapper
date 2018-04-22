@@ -4,11 +4,19 @@
     xmlns:configuration="clr-namespace:GamepadMapper.Configuration"
     xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:menus="clr-namespace:GamepadMapper.Menus"
     xmlns:wpf="clr-namespace:GamepadMapper.Wpf">
 
     <wpf:StartAngleConverter x:Key="StartAngleConverter" />
     <wpf:EndAngleConverter x:Key="EndAngleConverter" />
     <wpf:IsModConverter x:Key="IsModConverter" />
+    <wpf:IsFocusedConverter x:Key="IsFocusedConverter" />
+    <wpf:PolarToRectangularConverter
+        x:Key="PolarToRectangularConverter"
+        ContainerSize="360"
+        ItemHeight="50"
+        ItemWidth="50"
+        Radius="145" />
 
     <Style x:Key="RoundWrapper" TargetType="Border">
         <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
@@ -17,6 +25,60 @@
         <Setter Property="BorderBrush" Value="White" />
         <Setter Property="CornerRadius" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
     </Style>
+
+    <DataTemplate DataType="{x:Type menus:IconBase}">
+        <ContentPresenter>
+            <ContentPresenter.ContentTemplateSelector>
+                <wpf:IconTemplateSelector>
+                    <wpf:IconTemplateSelector.MaterialIcon>
+                        <DataTemplate DataType="{x:Type menus:MaterialIcon}">
+                            <iconPacks:PackIconMaterial
+                                Width="32"
+                                Height="32"
+                                Kind="{Binding Kind}" />
+                        </DataTemplate>
+                    </wpf:IconTemplateSelector.MaterialIcon>
+                    <wpf:IconTemplateSelector.TextIcon>
+                        <DataTemplate DataType="{x:Type menus:TextIcon}">
+                            <TextBlock
+                                Padding="0"
+                                FontSize="34"
+                                LineHeight="30"
+                                LineStackingStrategy="BlockLineHeight"
+                                FontWeight="Bold"
+                                Text="{Binding Text}" />
+                        </DataTemplate>
+                    </wpf:IconTemplateSelector.TextIcon>
+                    <wpf:IconTemplateSelector.CompositeIcon>
+                        <DataTemplate DataType="{x:Type menus:CompositeIcon}">
+                            <DockPanel MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Content="{Binding Icon2}"
+                                    DockPanel.Dock="Top" />
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Content="{Binding Icon4}"
+                                    DockPanel.Dock="Bottom" />
+                                <ContentPresenter
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Icon1}"
+                                    DockPanel.Dock="Left" />
+                                <ContentPresenter
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Icon3}"
+                                    DockPanel.Dock="Right" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </wpf:IconTemplateSelector.CompositeIcon>
+                </wpf:IconTemplateSelector>
+            </ContentPresenter.ContentTemplateSelector>
+        </ContentPresenter>
+    </DataTemplate>
 
     <wpf:HelpKeyTemplateSelector x:Key="HelpKeyTemplateSelector">
         <wpf:HelpKeyTemplateSelector.A>
@@ -572,6 +634,8 @@
                                 StrokeThickness="0" />
                             <ed:Arc
                                 x:Name="Pointer"
+                                Canvas.Left="0"
+                                Canvas.Top="0"
                                 Width="360"
                                 Height="360"
                                 Margin="0"
@@ -585,6 +649,7 @@
                                         <Binding Path="PointerAngle" RelativeSource="{RelativeSource TemplatedParent}" />
                                         <Binding Path="PointerWidth" RelativeSource="{RelativeSource TemplatedParent}" />
                                         <Binding Path="(wpf:RadialMenu.ArcWidth)" RelativeSource="{RelativeSource Self}" />
+                                        <Binding Path="(wpf:RadialMenu.MaxArcWidth)" RelativeSource="{RelativeSource Self}" />
                                     </MultiBinding>
                                 </ed:Arc.StartAngle>
                                 <ed:Arc.EndAngle>
@@ -592,11 +657,78 @@
                                         <Binding Path="PointerAngle" RelativeSource="{RelativeSource TemplatedParent}" />
                                         <Binding Path="PointerWidth" RelativeSource="{RelativeSource TemplatedParent}" />
                                         <Binding Path="(wpf:RadialMenu.ArcWidth)" RelativeSource="{RelativeSource Self}" />
+                                        <Binding Path="(wpf:RadialMenu.MaxArcWidth)" RelativeSource="{RelativeSource Self}" />
                                     </MultiBinding>
                                 </ed:Arc.EndAngle>
                             </ed:Arc>
+                            <ItemsControl
+                                x:Name="RadialIcons"
+                                Width="360"
+                                Height="360"
+                                ItemsSource="{TemplateBinding CurrentPage}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="FrameworkElement">
+                                        <Setter Property="Canvas.Left" Value="{Binding Angle, Converter={StaticResource PolarToRectangularConverter}, ConverterParameter='x'}" />
+                                        <Setter Property="Canvas.Top" Value="{Binding Angle, Converter={StaticResource PolarToRectangularConverter}, ConverterParameter='y'}" />
+                                        <Setter Property="Width" Value="50" />
+                                        <Setter Property="Height" Value="50" />
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="menus:PageItem">
+                                        <Viewbox
+                                            x:Name="Root"
+                                            Width="50"
+                                            Height="50"
+                                            Stretch="Uniform"
+                                            TextElement.Foreground="#dd000000">
+                                            <ContentPresenter Content="{Binding Icon}">
+                                                <ContentPresenter.Style>
+                                                    <Style TargetType="ContentPresenter">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource IsFocusedConverter}">
+                                                                        <Binding Path="CurrentItem" RelativeSource="{RelativeSource AncestorType=wpf:RadialMenu}" />
+                                                                        <Binding ElementName="Root" Path="DataContext" />
+                                                                        <Binding Path="ItemFocused" RelativeSource="{RelativeSource AncestorType=wpf:RadialMenu}" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
+                                                                <DataTrigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
+                                                                                <LinearColorKeyFrame KeyTime="0:0:0.2" Value="White" />
+                                                                            </ColorAnimationUsingKeyFrames>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </DataTrigger.EnterActions>
+                                                                <DataTrigger.ExitActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
+                                                                                <LinearColorKeyFrame KeyTime="0:0:0.2" Value="#dd000000" />
+                                                                            </ColorAnimationUsingKeyFrames>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </DataTrigger.ExitActions>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentPresenter.Style>
+                                            </ContentPresenter>
+                                        </Viewbox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Canvas>
                         <ContentPresenter
+                            x:Name="HelpScreen"
                             Margin="8"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
@@ -621,6 +753,20 @@
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RadialIcons" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HelpScreen" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -628,16 +774,30 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.StartAngle)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-60">
                                                 <EasingDoubleKeyFrame.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
+                                                    <QuadraticEase EasingMode="EaseOut" />
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuCircle" Storyboard.TargetProperty="(ed:Arc.EndAngle)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="-60">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-60">
                                                 <EasingDoubleKeyFrame.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RadialIcons" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HelpScreen" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
@@ -652,7 +812,7 @@
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(wpf:RadialMenu.ArcWidth)">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1">
                                                 <EasingDoubleKeyFrame.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
+                                                    <QuadraticEase EasingMode="EaseOut" />
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
@@ -665,10 +825,45 @@
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(wpf:RadialMenu.ArcWidth)">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0">
                                                 <EasingDoubleKeyFrame.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
+                                                    <QuadraticEase EasingMode="EaseOut" />
                                                 </EasingDoubleKeyFrame.EasingFunction>
                                             </EasingDoubleKeyFrame>
                                         </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="ItemFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(wpf:RadialMenu.MaxArcWidth)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="45">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                            <LinearColorKeyFrame KeyTime="0:0:0.2" Value="Black" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(wpf:RadialMenu.MaxArcWidth)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.0" Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="180">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Pointer" Storyboard.TargetProperty="(Path.Fill).(SolidColorBrush.Color)">
+                                            <LinearColorKeyFrame KeyTime="0:0:0.2" Value="#FF30C0FF" />
+                                        </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

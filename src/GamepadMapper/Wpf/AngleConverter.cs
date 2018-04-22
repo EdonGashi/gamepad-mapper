@@ -14,7 +14,7 @@ namespace GamepadMapper.Wpf
             }
 
             var angle = (double)values[0];
-            var width = (double)values[1] * (double)values[2];
+            var width = Math.Min((double)values[1] * (double)values[2], (double)values[3]);
             return angle - width / 2d;
         }
 
@@ -34,7 +34,7 @@ namespace GamepadMapper.Wpf
             }
 
             var angle = (double)values[0];
-            var width = (double)values[1] * (double)values[2];
+            var width = Math.Min((double)values[1] * (double)values[2], (double)values[3]);
             return angle + width / 2d;
         }
 

@@ -178,4 +178,28 @@ namespace GamepadMapper.Configuration
 
         public override string Stringify() => $"set(\"{Escape(Key)}\", \"{Escape(Value)}\")";
     }
+
+    public class SendCharacterAction : ActionDescriptor
+    {
+        public SendCharacterAction(char c)
+        {
+            Character = c;
+        }
+
+        public char Character { get; }
+
+        public override string Stringify() => $"sendchar(\"{Escape(Character.ToString())}\")";
+    }
+
+    public class SendStringAction : ActionDescriptor
+    {
+        public SendStringAction(string str)
+        {
+            String = str;
+        }
+
+        public string String { get; }
+
+        public override string Stringify() => $"sendchar(\"{Escape(String)}\")";
+    }
 }

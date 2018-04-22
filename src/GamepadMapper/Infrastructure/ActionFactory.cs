@@ -124,6 +124,10 @@ namespace GamepadMapper.Infrastructure
                     {
                         MenuController.Show(showMenu.Menu);
                     });
+                case SendCharacterAction sendc:
+                    return new SendCharacterActuator(sendc.Character, Keyboard);
+                case SendStringAction sendstr:
+                    return new SendStringActuator(sendstr.String, Keyboard);
                 default:
                     return new DelegateAction(() => { });
             }

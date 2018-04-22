@@ -26,8 +26,10 @@
             PointerAngle="{Binding PointerAngle}"
             IsPointerVisible="{Binding IsPointerVisible}"
             HelpScreen="{Binding HelpScreen}"
-            
+            CurrentPage="{Binding CurrentPage}"
+            CurrentItem="{Binding CurrentItem}"
             PointerWidth="{Binding PointerWidth}"
+            ItemFocused="{Binding ItemFocused}"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom" />
     </Grid>

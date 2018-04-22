@@ -740,6 +740,10 @@ namespace GamepadMapper.Configuration.Parsing
                     return args.Count < 1 ? null : new ResetConfigurationAction(args[0]);
                 case "set":
                     return args.Count < 2 ? null : new SetConfigurationAction(args[0], args[1]);
+                case "sendchar":
+                    return args.Count >= 1 && args[0].Length == 1 ? new SendCharacterAction(args[0][0]) : null;
+                case "sendstr":
+                    return args.Count >= 1 ? new SendStringAction(args[0]) : null;
                 default:
                     return null;
             }

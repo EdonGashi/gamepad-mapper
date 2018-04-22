@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using GamepadMapper.Configuration;
+using GamepadMapper.Configuration.Parsing;
 using GamepadMapper.Infrastructure;
+using MahApps.Metro.IconPacks;
 
 namespace GamepadMapper.Menus
 {
@@ -35,7 +40,7 @@ namespace GamepadMapper.Menus
         public HelpConfiguration HelpScreen { get; }
     }
 
-    public class MenuPage
+    public class MenuPage : IEnumerable<PageItem>
     {
         public static MenuPage FromConfig(PageConfiguration config, int index, IActionFactory actionFactory)
         {
@@ -57,6 +62,10 @@ namespace GamepadMapper.Menus
         public HelpConfiguration HelpScreen { get; }
 
         public IReadOnlyList<PageItem> Items { get; }
+
+        public IEnumerator<PageItem> GetEnumerator() => Items.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class PageItem
@@ -68,14 +77,14 @@ namespace GamepadMapper.Menus
             return new PageItem(index, totalItems,
                  CommandBindingCollection.FromCollection(config.CommandBindings, actionFactory),
                  config.Help,
-                 null,
+                 IconBase.FromTokens(config.Icon),
                  config.Name,
                  config.Text);
         }
 
         private static double Normalize(double angle)
         {
-            return (angle + 360d) % 360d;
+            return (angle + 720d) % 360d;
         }
 
         public PageItem(
@@ -83,7 +92,7 @@ namespace GamepadMapper.Menus
             int totalItems,
             CommandBindingCollection commandBindings,
             HelpConfiguration helpScreen,
-            object icon,
+            IconBase icon,
             string title,
             string description)
         {
@@ -92,16 +101,12 @@ namespace GamepadMapper.Menus
             var angleStart = AngleStart + index * angleStep;
             if (totalItems == 1)
             {
-                Angle = 0d;
-                StartAngle = 360d - 90d;
-                EndAngle = 90d;
+                angleStep = 180d;
             }
-            else
-            {
-                Angle = angleStart;
-                StartAngle = Normalize(angleStart - angleStep / 2d);
-                EndAngle = Normalize(angleStart + angleStep / 2d);
-            }
+
+            Angle = angleStart;
+            StartAngle = Normalize(angleStart - angleStep / 2d);
+            EndAngle = Normalize(angleStart + angleStep / 2d);
 
             CommandBindings = commandBindings;
             HelpScreen = helpScreen;
@@ -118,7 +123,7 @@ namespace GamepadMapper.Menus
 
         public double EndAngle { get; }
 
-        public object Icon { get; }
+        public IconBase Icon { get; }
 
         public string Title { get; }
 
@@ -127,5 +132,82 @@ namespace GamepadMapper.Menus
         public CommandBindingCollection CommandBindings { get; }
 
         public HelpConfiguration HelpScreen { get; }
+    }
+
+    public abstract class IconBase
+    {
+        public static IconBase FromTokens(IReadOnlyList<Token> tokens)
+        {
+            var i = 0;
+            IconBase Read()
+            {
+                var token = tokens[i++];
+                if (token.IsString)
+                {
+                    return new TextIcon(token.Value);
+                }
+
+                return new MaterialIcon(Enum.TryParse(token.Value, true, out PackIconMaterialKind kind)
+                    ? kind
+                    : PackIconMaterialKind.SquareOutline);
+            }
+
+            switch (tokens.Count)
+            {
+                case 0:
+                    return new MaterialIcon(PackIconMaterialKind.SquareOutline);
+                case 1:
+                    return Read();
+                case 2:
+                    return new CompositeIcon(Read(), Read(), MaterialIcon.None, MaterialIcon.None);
+                case 3:
+                    return new CompositeIcon(Read(), Read(), Read(), MaterialIcon.None);
+                default:
+                    return new CompositeIcon(Read(), Read(), Read(), Read());
+            }
+        }
+    }
+
+    public class CompositeIcon : IconBase
+    {
+        public CompositeIcon(IconBase icon1, IconBase icon2, IconBase icon3, IconBase icon4)
+        {
+            Icon1 = icon1;
+            Icon2 = icon2;
+            Icon3 = icon3;
+            Icon4 = icon4;
+        }
+
+        public IconBase Icon1 { get; }
+
+        public IconBase Icon2 { get; }
+
+        public IconBase Icon3 { get; }
+
+        public IconBase Icon4 { get; }
+    }
+
+    public class TextIcon : IconBase
+    {
+        public TextIcon(string text)
+        {
+            Text = text;
+        }
+
+        public string Text { get; }
+
+        public override string ToString() => Text;
+    }
+
+    public class MaterialIcon : IconBase
+    {
+        public static MaterialIcon None => new MaterialIcon(PackIconMaterialKind.None);
+
+        public MaterialIcon(PackIconMaterialKind kind)
+        {
+            Kind = kind;
+        }
+
+        public PackIconMaterialKind Kind { get; }
     }
 }

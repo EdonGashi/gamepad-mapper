@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using GamepadMapper.Configuration;
 using GamepadMapper.Menus;
@@ -23,10 +24,32 @@ namespace GamepadMapper.Wpf
             d.SetValue(ArcWidthProperty, value);
         }
 
+        public static readonly DependencyProperty MaxArcWidthProperty =
+            DependencyProperty.RegisterAttached("MaxArcWidth",
+                typeof(double),
+                typeof(RadialMenu),
+                new PropertyMetadata(180d));
+
+        public static double GetMaxArcWidth(DependencyObject d)
+        {
+            return (double)d.GetValue(ArcWidthProperty);
+        }
+
+        public static void SetMaxArcWidth(DependencyObject d, double value)
+        {
+            d.SetValue(ArcWidthProperty, value);
+        }
+
         static RadialMenu()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RadialMenu), new FrameworkPropertyMetadata(typeof(RadialMenu)));
         }
+
+        public static readonly DependencyProperty CurrentPageProperty =
+            DependencyProperty.Register("CurrentPage", 
+                typeof(MenuPage), 
+                typeof(RadialMenu), 
+                new PropertyMetadata(null));
 
         public static readonly DependencyProperty ItemFocusedProperty =
             DependencyProperty.Register("ItemFocused",
@@ -69,6 +92,12 @@ namespace GamepadMapper.Wpf
                 typeof(PageItem),
                 typeof(RadialMenu),
                 new PropertyMetadata(null));
+
+        public MenuPage CurrentPage
+        {
+            get => (MenuPage)GetValue(CurrentPageProperty);
+            set => SetValue(CurrentPageProperty, value);
+        }
 
         public PageItem CurrentItem
         {
