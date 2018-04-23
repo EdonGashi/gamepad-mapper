@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using WindowsInput;
 using GamepadMapper.Actuators;
@@ -83,7 +84,15 @@ namespace GamepadMapper.Infrastructure
                     {
                         try
                         {
-                            Process.Start(runProgramAction.Path, runProgramAction.Arguments);
+                            if (runProgramAction.Arguments == null)
+                            {
+                                Process.Start(Environment.ExpandEnvironmentVariables(runProgramAction.Path));
+                                return;
+                            }
+
+                            Process.Start(
+                                Environment.ExpandEnvironmentVariables(runProgramAction.Path),
+                                Environment.ExpandEnvironmentVariables(runProgramAction.Arguments));
                         }
                         catch
                         {

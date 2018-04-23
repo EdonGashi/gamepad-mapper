@@ -167,6 +167,7 @@ namespace GamepadMapper.Configuration.Parsing
                         continue;
                     default:
                         logger?.UnexpectedLine(stream);
+                        stream.Move();
                         continue;
                 }
             }
@@ -230,6 +231,7 @@ namespace GamepadMapper.Configuration.Parsing
                         continue;
                     default:
                         logger?.UnexpectedLine(stream);
+                        stream.Move();
                         continue;
                 }
             }
@@ -313,7 +315,6 @@ namespace GamepadMapper.Configuration.Parsing
                         break;
                     default:
                         logger?.UnexpectedLine(stream);
-                        stream.Move();
                         break;
                 }
 

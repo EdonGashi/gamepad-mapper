@@ -326,27 +326,27 @@
                 $button_increment = Space
                 RS                = Mouse
             end help
-            icon        = "9" "0" "*" "+"
+            icon        = "9" "0" "-" "+"
             bind menu_x = sendchar("9")
             bind menu_y = sendchar("0")
-            bind menu_b = sendchar("*")
+            bind menu_b = sendchar("-")
             bind menu_a = sendchar("+")
         end item
         item
             help
-                A                 = `
-                B                 = "$"
-                X                 = £
-                Y                 = €
+                A                 = =
+                B                 = %
+                X                 = *
+                Y                 = ÷
                 $button_decrement = Backspace
                 $button_increment = Space
                 RS                = Mouse
             end help
-            icon        = "£" "€" "$" "`"
-            bind menu_x = sendchar("£")
-            bind menu_y = sendchar("€")
-            bind menu_b = sendchar("$")
-            bind menu_a = sendchar("`")
+            icon        = "*" "÷" "%" "="
+            bind menu_x = sendchar("*")
+            bind menu_y = sendchar("÷")
+            bind menu_b = sendchar("%")
+            bind menu_a = sendchar("=")
         end item
         item
             help
@@ -366,51 +366,51 @@
         end item
         item
             help
-                A                 = ^
-                B                 = %
-                X                 = "="
+                A                 = "$"
+                B                 = ^
+                X                 = `
                 Y                 = "#"
                 $button_decrement = Backspace
                 $button_increment = Space
                 RS                = Mouse
             end help
-            icon        = "=" "#" "%" "^"
-            bind menu_x = sendchar("=")
+            icon        = "`" "#" "^" "$"
+            bind menu_x = sendchar("`")
             bind menu_y = sendchar("#")
-            bind menu_b = sendchar("%")
-            bind menu_a = sendchar("^")
+            bind menu_b = sendchar("^")
+            bind menu_a = sendchar("$")
         end item
         item
             help
-                A                 = ]
-                B                 = [
+                A                 = [
+                B                 = ]
                 X                 = <
                 Y                 = >
                 $button_decrement = Backspace
                 $button_increment = Space
                 RS                = Mouse
             end help
-            icon        = "<" ">" "[" "]"
+            icon        = "<" ">" "]" "["
             bind menu_x = sendchar("<")
             bind menu_y = sendchar(">")
-            bind menu_b = sendchar("[")
-            bind menu_a = sendchar("]")
+            bind menu_b = sendchar("]")
+            bind menu_a = sendchar("[")
         end item
         item
             help
-                A                 = ")"
-                B                 = "("
+                A                 = "("
+                B                 = ")"
                 X                 = {
                 Y                 = }
                 $button_decrement = Backspace
                 $button_increment = Space
                 RS                = Mouse
             end help
-            icon        = "{" "}" "(" ")"
+            icon        = "{" "}" ")" "("
             bind menu_x = sendchar("{")
             bind menu_y = sendchar("}")
-            bind menu_b = sendchar("(")
-            bind menu_a = sendchar(")")
+            bind menu_b = sendchar(")")
+            bind menu_a = sendchar("(")
         end item
     end page
 end menu

@@ -100,7 +100,7 @@ namespace GamepadMapper.Configuration.Parsing
                 streamWriter = new StreamWriter(Path);
             }
 
-            if (lineNumber++ > 100_000)
+            if (lineNumber++ > 10_000)
             {
                 // Sometimes the parser can get in an infinite loop.
                 // Until that is fixed this will prevent gigantic log files.

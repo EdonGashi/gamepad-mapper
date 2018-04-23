@@ -11,7 +11,6 @@
 	    item
 		    name = Keyboard
 			icon = Keyboard
-			text = Radial keyboard
 			help
 			    $button_enter = Open keyboard
 			end help
@@ -20,11 +19,10 @@
 	    item
 		    name = Favorites
 			icon = Star
-			text = Favorite shortcuts
 			help
 			    $button_enter = Open favorites
 			end help
-			bind menu_enter = show(menu_settings)
+			bind menu_enter = show(menu_favorites)
 		end item
         item
             icon                = VolumeHigh
@@ -53,6 +51,74 @@
 	end page
 end menu
 
+menu menu_favorites
+    help
+	    $button_back = Back
+	    LS = Select item
+		RS = mouse
+		DPadHorizontal = Cycle items
+	end help
+	help2
+		LB = Close menu
+	end help2
+	page
+	    item
+			icon = Google
+			name = Google
+			bind menu_enter = run("https://google.com")
+			help
+				$button_enter = Visit google.com
+				$button_back = Back
+			end help
+		end item
+	    item
+			icon = Reddit
+			name = Reddit
+			bind menu_enter = run("https://reddit.com")
+			help
+				$button_enter = Visit reddit.com
+				$button_back = Back
+			end help
+		end item
+	    item
+			icon = Facebook
+			name = Facebook
+			bind menu_enter = run("https://facebook.com")
+			help
+				$button_enter = Visit facebook.com
+				$button_back = Back
+			end help
+		end item
+	    item
+			icon = Twitter
+			name = Twitter
+			bind menu_enter = run("https://twitter.com")
+			help
+				$button_enter = Visit twitter.com
+				$button_back = Back
+			end help
+		end item
+	    item
+			icon = FolderOpen
+			name = File Explorer
+			bind menu_enter = run("explorer")
+			help
+				$button_enter = Open explorer
+				$button_back = Back
+			end help
+		end item
+		item
+			icon = Steam
+			name = Steam
+			bind menu_enter = run("%PROGRAMFILES(X86)%/steam/steam.exe")
+			help
+				$button_enter = Launch Steam
+				$button_back = Back
+			end help
+		end item
+	end page
+end menu
+
 menu menu_settings
     help
 	    $button_back = Back
@@ -67,13 +133,16 @@ menu menu_settings
 	    item
 		    icon = Mouse
 			name = Mouse Settings
-		end item
-	    item
-		    name = Scroll Settings
-		    icon = CursorMove
 			bind menu_enter     = command(menu_focus)
 			bind menu_increment = increment(mouse.speed)
 			bind menu_decrement = decrement(mouse.speed)
+		end item
+	    item
+		    name = Scrolling
+		    icon = CursorMove
+			bind menu_enter     = command(menu_focus)
+			bind menu_increment = increment(scroll.speed)
+			bind menu_decrement = decrement(scroll.speed)
 		end item
 	    item
 		    name = Menu Position

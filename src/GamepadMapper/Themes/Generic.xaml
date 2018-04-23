@@ -17,6 +17,9 @@
         ItemHeight="50"
         ItemWidth="50"
         Radius="145" />
+    <wpf:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <wpf:SizeSelectorConverter x:Key="SizeSelectorConverter" />
+    <wpf:RadialMarginCalculator x:Key="RadialMarginCalculator" />
 
     <Style x:Key="RoundWrapper" TargetType="Border">
         <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
@@ -35,6 +38,7 @@
                             <iconPacks:PackIconMaterial
                                 Width="32"
                                 Height="32"
+                                Margin="2"
                                 HorizontalAlignment="Center"
                                 Kind="{Binding Kind}" />
                         </DataTemplate>
@@ -211,6 +215,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
+                        FontWeight="Thin"
                         Foreground="White">
                         <TextBlock.LayoutTransform>
                             <ScaleTransform ScaleX="0.6" />
@@ -226,6 +231,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
+                        FontWeight="Thin"
                         Foreground="White">
                         <TextBlock.LayoutTransform>
                             <ScaleTransform ScaleX="0.6" />
@@ -611,6 +617,7 @@
                                     ContentTemplateSelector="{StaticResource HelpKeyTemplateSelector}" />
                                 <TextBlock
                                     VerticalAlignment="Center"
+                                    FontWeight="Thin"
                                     Foreground="#FFFFFF"
                                     Text="{Binding Description}" />
                             </StackPanel>
@@ -639,7 +646,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             MaxWidth="360"
-                            Margin="0,0,0,8"
+                            Margin="0,0,0,16"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Content="{TemplateBinding HelpScreen2}"
@@ -648,12 +655,17 @@
                             x:Name="HelpScreen"
                             Grid.Row="1"
                             Grid.Column="0"
-                            Margin="0,0,8,0"
-                            MinWidth="160"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Content="{TemplateBinding HelpScreen}"
-                            Opacity="0" />
+                            Opacity="0">
+                            <ContentPresenter.Margin>
+                                <MultiBinding Converter="{StaticResource RadialMarginCalculator}">
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </ContentPresenter.Margin>
+                        </ContentPresenter>
                         <Canvas
                             x:Name="Canvas"
                             Grid.Row="1"
@@ -684,25 +696,28 @@
                                 <ContentPresenter.ContentTemplate>
                                     <DataTemplate DataType="{x:Type menus:PageItem}">
                                         <Border Padding="8" Background="#AA222222">
-                                            <Grid
+                                            <StackPanel
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 TextElement.Foreground="White">
                                                 <Viewbox
-                                                    Width="120"
-                                                    Height="120"
+                                                    Width="{Binding Title, Converter={StaticResource SizeSelectorConverter}}"
+                                                    Height="{Binding Title, Converter={StaticResource SizeSelectorConverter}}"
+                                                    HorizontalAlignment="Center"
                                                     Stretch="Uniform">
                                                     <ContentPresenter Content="{Binding Icon}" />
                                                 </Viewbox>
                                                 <TextBlock
                                                     MaxWidth="200"
+                                                    Margin="0,8,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    FontSize="26"
+                                                    FontWeight="Thin"
                                                     Text="{Binding Title}"
-                                                    TextWrapping="Wrap" />
-                                                <TextBlock
-                                                    MaxWidth="180"
-                                                    Text="{Binding Description}"
-                                                    TextWrapping="Wrap" />
-                                            </Grid>
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap"
+                                                    Visibility="{Binding Title, Converter={StaticResource NullToVisibilityConverter}}" />
+                                            </StackPanel>
                                         </Border>
                                     </DataTemplate>
                                 </ContentPresenter.ContentTemplate>
