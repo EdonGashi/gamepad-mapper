@@ -1,4 +1,7 @@
-﻿# Deadzones
+﻿# FPS
+fps = 144
+
+# Deadzones
 deadzone.ls = 10%
 deadzone.rs = 10%
 deadzone.lt = 10%
