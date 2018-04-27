@@ -72,4 +72,4 @@ Back+Start combination enables/disables processing input. This gesture cannot be
 - [speps/XInputDotNet](https://github.com/speps/XInputDotNet) for XInput handling.
 - [michaelnoonan/inputsimulator](https://github.com/michaelnoonan/inputsimulator) for keyboard and mouse simulation.
 - [TChatzigiannakis/InputSimulatorPlus](https://github.com/TChatzigiannakis/InputSimulatorPlus) for enhanced version of InputSimulator.
-
+- [MahApps/MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) for icon packs, and [Templarian/MaterialDesign](https://github.com/Templarian/MaterialDesign) for the material icons. 
