@@ -1,8 +1,18 @@
-# Work in progress
+# GamepadMapper
 
 .NET implementation of [Gopher360](https://github.com/Tylemagne/Gopher360), with an aim of being customizable and offering an OSD assistant.
 
-Default profile:
+# Features
+
+- Versatile [configuration](https://github.com/EdonGashi/gamepad-mapper/blob/master/src/GamepadMapper/config.txt).
+- Mod key support, which doubles available button bindings.
+- Key combinations, macros, and commands.
+- Live configuration editing.
+- Multiple profiles with live switching.
+- [Customizable](https://github.com/EdonGashi/gamepad-mapper/blob/master/src/GamepadMapper/menu_main.txt) radial menu.
+- Radial keyboard built entirely in [config](https://github.com/EdonGashi/gamepad-mapper/blob/master/src/GamepadMapper/menu_keyboard.txt).
+
+# Default profile
 
 Key|Function|Comment
 ---|---|---
@@ -14,7 +24,7 @@ DPadLeft|Press LEFT, hold repeat|
 DPadUp|Press UP, hold repeat|
 DPadRight|Press RIGHT, hold repeat|
 DPadDown|Press DOWN, hold repeat|
-LB|Show OSD|Not yet implemented.
+LB|Show menu|Displays radial menu.
 RB|MOD|When holding MOD other buttons have alternate functions.
 LT|Press BACKSPACE, hold repeat|Repeat rate is affected by pressure.
 RT|Press SPACE, hold repeat|Repeat rate is affected by pressure.
@@ -35,7 +45,7 @@ ModDPadLeft|Press ALT+LEFT, hold repeat|Browser back, VLC jump back.
 ModDPadUp|Press VOLUME_UP, hold repeat|
 ModDPadRight|Press ALT+RIGHT, hold repeat|Browser forward, VLC jump forward.
 ModDPadDown|Press VOLUME_DOWN, hold repeat|
-ModLT|Toggle OSD|Not yet implemented.
+ModLB|Show keyboard|Displays radial keyboard.
 ModRB|N/A|
 ModLT|Press CTRL+Z, hold repeat|Repeat rate is affected by pressure.
 ModRT|Press CTRL+Y, hold repeat|Repeat rate is affected by pressure.
