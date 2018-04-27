@@ -132,30 +132,71 @@ menu menu_settings
 	page
 	    item
 		    icon = Mouse
-			name = Mouse Settings
+			name = Mouse
 			bind menu_enter     = command(menu_focus)
 			bind menu_increment = increment(mouse.speed)
 			bind menu_decrement = decrement(mouse.speed)
+			bind menu_custom_1  = toggle(mouse.speed)
+			bind menu_custom_2  = reset(mouse.speed)
+            help
+                $button_increment = Increase speed
+                $button_decrement = Decrease speed
+                $button_custom_1  = Toggle speed
+				$button_custom_2  = Reset speed
+				$button_enter     = Focus
+				$button_back      = Back
+            end help
 		end item
 	    item
 		    name = Scrolling
 		    icon = CursorMove
 			bind menu_enter     = command(menu_focus)
-			bind menu_increment = increment(scroll.speed)
-			bind menu_decrement = decrement(scroll.speed)
+			bind menu_increment = increment(scroll.speed); flashcfg(scroll.speed)
+			bind menu_decrement = decrement(scroll.speed); flashcfg(scroll.speed)
+			bind menu_custom_1  = toggle(scroll.speed); flashcfg(scroll.speed)
+			bind menu_custom_2  = reset(scroll.speed); flashcfg(scroll.speed)
+            help
+                $button_increment = Increase speed
+                $button_decrement = Decrease speed
+                $button_custom_1  = Toggle speed
+				$button_custom_2  = Reset speed
+				$button_enter     = Focus
+				$button_back      = Back
+            end help
 		end item
 	    item
-		    name = Menu Position
+		    name = Menu
 		    icon = MoveResizeVariant
             bind menu_increment = increment(menu.scale)
             bind menu_decrement = decrement(menu.scale)
             bind menu_custom_1  = increment(menu.placement)
             bind menu_custom_2  = reset(menu.placement); reset(menu.scale)
 			bind menu_enter     = command(menu_focus)
+            help
+                $button_increment = Increase size
+                $button_decrement = Decrease size
+                $button_custom_1  = Toggle position
+				$button_custom_2  = Reset to default
+				$button_enter     = Focus
+				$button_back      = Back
+            end help
 		end item
 	    item
 		    name = Profile
 		    icon = Account
+            bind menu_increment = increment(profile.current)
+            bind menu_decrement = decrement(profile.current)
+            bind menu_custom_1  = toggle(profile.current)
+            bind menu_custom_2  = reset(profile.current)
+			bind menu_enter     = command(menu_focus)
+            help
+                $button_increment = Next profile
+                $button_decrement = Previous profile
+                $button_custom_1  = Next profile
+				$button_custom_2  = Reset profile
+				$button_enter     = Focus
+				$button_back      = Back
+            end help
 		end item
 	end page
 end menu

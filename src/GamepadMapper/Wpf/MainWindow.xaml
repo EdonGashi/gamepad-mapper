@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menus="clr-namespace:GamepadMapper.Menus"
     xmlns:wpf="clr-namespace:GamepadMapper.Wpf"
-    Title="MainWindow"
+    Title="GamepadMapper"
     Width="525"
     Height="350"
     d:DataContext="{d:DesignInstance Type=menus:IMenuController,
