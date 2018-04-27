@@ -15,6 +15,7 @@
 Main menu:
 
 ![Menu](docs/menu.png)
+
 ![Favorites](docs/favorites.png)
 
 Keyboard:
