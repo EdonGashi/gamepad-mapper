@@ -275,6 +275,30 @@ namespace GamepadMapper.Configuration
                 Toggle = () => Menu.InvertY = !Menu.InvertY,
                 Reset = () => Menu.InvertY = false
             });
+            Add(new ConfigDescriptor("menu.placement")
+            {
+                GetValue = () => Placement.MenuPosition,
+                SetValue = val => Placement.MenuPosition = Enum.TryParse<MenuPosition>(val, true, out var position)
+                    ? position
+                    : MenuPosition.BottomRight,
+                IsValidValue = val => Enum.TryParse<MenuPosition>(val, true, out _),
+                FormatValue = () => Placement.MenuPosition.ToString(),
+                Increment = () => Placement.MenuPosition = (MenuPosition)(((int)Placement.MenuPosition + 1) % ((int)MenuPosition.BottomRight + 1)),
+                Decrement = () => Placement.MenuPosition = (MenuPosition)(((int)Placement.MenuPosition + (int)MenuPosition.BottomRight) % ((int)MenuPosition.BottomRight + 1)),
+                Toggle = () => Placement.MenuPosition = (MenuPosition)(((int)Placement.MenuPosition + 1) % ((int)MenuPosition.BottomRight + 1)),
+                Reset = () => Placement.MenuPosition = MenuPosition.BottomRight
+            });
+            Add(new ConfigDescriptor("menu.scale")
+            {
+                GetValue = () => Placement.Scale,
+                SetValue = val => Placement.Scale = Clamp(val, 0.5d, 10d, 1d),
+                IsValidValue = val => IsValid(val, 0.5d, 10d),
+                FormatValue = () => Placement.Scale.ToString(),
+                Increment = () => Placement.Scale = Clamp(Placement.Scale + 0.1d, 0.5d, 10d),
+                Decrement = () => Placement.Scale = Clamp(Placement.Scale - 0.1d, 0.5d, 10d),
+                Toggle = () => Placement.Scale = Toggle(Placement.Scale, 1d, 2d, 3d, 4d),
+                Reset = () => Placement.Scale = 1d
+            });
             Add(new ConfigDescriptor("profile.current")
             {
                 GetValue = () => CurrentProfile,
@@ -348,228 +372,229 @@ namespace GamepadMapper.Configuration
 
         public List<MenuConfiguration> Menus { get; } = new List<MenuConfiguration>();
 
-        public string Stringify(bool comments)
-        {
-            const string i1 = "  ";
-            const string i2 = i1 + i1;
-            const string i3 = i2 + i1;
-            const string i4 = i3 + i1;
+        //public string Stringify(bool comments)
+        //{
+        //    const string i1 = "  ";
+        //    const string i2 = i1 + i1;
+        //    const string i3 = i2 + i1;
+        //    const string i4 = i3 + i1;
 
-            var sb = new StringBuilder();
-            if (comments)
-            {
-                sb.AppendLine("# FPS");
-            }
+        //    var sb = new StringBuilder();
+        //    if (comments)
+        //    {
+        //        sb.AppendLine("# FPS");
+        //    }
 
-            sb.AppendLine($"fps = {Fps}");
+        //    sb.AppendLine($"fps = {Fps}");
 
-            if (comments)
-            {
-                sb.AppendLine("# Deadzones");
-            }
+        //    if (comments)
+        //    {
+        //        sb.AppendLine("# Deadzones");
+        //    }
 
-            sb.AppendLine($"deadzone.ls = {100d * Deadzone.Ls}%");
-            sb.AppendLine($"deadzone.rs = {100d * Deadzone.Rs}%");
-            sb.AppendLine($"deadzone.lt = {100d * Deadzone.Lt}%");
-            sb.AppendLine($"deadzone.rt = {100d * Deadzone.Rt}%");
-            sb.AppendLine();
+        //    sb.AppendLine($"deadzone.ls = {100d * Deadzone.Ls}%");
+        //    sb.AppendLine($"deadzone.rs = {100d * Deadzone.Rs}%");
+        //    sb.AppendLine($"deadzone.lt = {100d * Deadzone.Lt}%");
+        //    sb.AppendLine($"deadzone.rt = {100d * Deadzone.Rt}%");
+        //    sb.AppendLine();
 
-            if (comments)
-            {
-                sb.AppendLine("# Buttons");
-            }
+        //    if (comments)
+        //    {
+        //        sb.AppendLine("# Buttons");
+        //    }
 
-            sb.AppendLine($"hold.duration = {Hold.Duration}");
-            sb.AppendLine($"repeat.delay = {Repeat.Delay}");
-            sb.AppendLine($"repeat.interval = {Repeat.Interval}");
-            sb.AppendLine();
+        //    sb.AppendLine($"hold.duration = {Hold.Duration}");
+        //    sb.AppendLine($"repeat.delay = {Repeat.Delay}");
+        //    sb.AppendLine($"repeat.interval = {Repeat.Interval}");
+        //    sb.AppendLine();
 
-            if (comments)
-            {
-                sb.AppendLine("# Mouse");
-            }
+        //    if (comments)
+        //    {
+        //        sb.AppendLine("# Mouse");
+        //    }
 
-            sb.AppendLine($"mouse.speed = {Mouse.Speed}");
-            sb.AppendLine($"mouse.acceleration = {Mouse.Acceleration}");
-            sb.AppendLine($"mouse.invertX = {Mouse.InvertX}");
-            sb.AppendLine($"mouse.invertY = {Mouse.InvertY}");
-            sb.AppendLine();
+        //    sb.AppendLine($"mouse.speed = {Mouse.Speed}");
+        //    sb.AppendLine($"mouse.acceleration = {Mouse.Acceleration}");
+        //    sb.AppendLine($"mouse.invertX = {Mouse.InvertX}");
+        //    sb.AppendLine($"mouse.invertY = {Mouse.InvertY}");
+        //    sb.AppendLine();
 
-            if (comments)
-            {
-                sb.AppendLine("# Scrolling");
-            }
+        //    if (comments)
+        //    {
+        //        sb.AppendLine("# Scrolling");
+        //    }
 
-            sb.AppendLine($"scroll.speed = {Scroll.Speed}");
-            sb.AppendLine($"scroll.acceleration = {Scroll.Acceleration}");
-            sb.AppendLine($"scroll.invertX = {Scroll.InvertX}");
-            sb.AppendLine($"scroll.invertY = {Scroll.InvertY}");
-            sb.AppendLine();
+        //    sb.AppendLine($"scroll.speed = {Scroll.Speed}");
+        //    sb.AppendLine($"scroll.acceleration = {Scroll.Acceleration}");
+        //    sb.AppendLine($"scroll.invertX = {Scroll.InvertX}");
+        //    sb.AppendLine($"scroll.invertY = {Scroll.InvertY}");
+        //    sb.AppendLine();
 
-            if (comments)
-            {
-                sb.AppendLine("# Radial menu");
-            }
+        //    if (comments)
+        //    {
+        //        sb.AppendLine("# Radial menu");
+        //    }
 
-            sb.AppendLine($"menu.minradius = {100d * Menu.MinRadius}%");
-            sb.AppendLine($"menu.smoothing = {Menu.Smoothing}");
-            sb.AppendLine($"menu.invertX = {Menu.InvertX}");
-            sb.AppendLine($"menu.invertY = {Menu.InvertY}");
-            sb.AppendLine($"menu.scale = {Placement.Scale}");
-            sb.AppendLine($"menu.placement = {Placement.MenuPosition}");
-            sb.AppendLine();
+        //    sb.AppendLine($"menu.minradius = {100d * Menu.MinRadius}%");
+        //    sb.AppendLine($"menu.smoothing = {Menu.Smoothing}");
+        //    sb.AppendLine($"menu.invertX = {Menu.InvertX}");
+        //    sb.AppendLine($"menu.invertY = {Menu.InvertY}");
+        //    sb.AppendLine($"menu.scale = {Placement.Scale}");
+        //    sb.AppendLine($"menu.placement = {Placement.MenuPosition}");
+        //    sb.AppendLine();
 
-            if (CurrentProfile != null)
-            {
-                if (comments)
-                {
-                    sb.AppendLine("# Initial profile");
-                }
+        //    if (CurrentProfile != null)
+        //    {
+        //        if (comments)
+        //        {
+        //            sb.AppendLine("# Initial profile");
+        //        }
 
-                sb.AppendLine($"profile.current = \"{Escape(InitialProfile)}\"");
-                sb.AppendLine();
-            }
+        //        sb.AppendLine($"profile.current = \"{Escape(InitialProfile)}\"");
+        //        sb.AppendLine();
+        //    }
 
-            if (Profiles != null && Profiles.Any())
-            {
-                if (comments)
-                {
-                    sb.AppendLine("# Profiles");
-                    sb.AppendLine();
-                }
+        //    if (Profiles != null && Profiles.Any())
+        //    {
+        //        if (comments)
+        //        {
+        //            sb.AppendLine("# Profiles");
+        //            sb.AppendLine();
+        //        }
 
-                foreach (var profile in Profiles)
-                {
-                    sb.AppendLine($"profile \"{Escape(profile.Name)}\"");
-                    foreach (var binding in profile.Bindings)
-                    {
-                        sb.AppendLine(i1 + binding);
-                    }
+        //        foreach (var profile in Profiles)
+        //        {
+        //            sb.AppendLine($"profile \"{Escape(profile.Name)}\"");
+        //            foreach (var binding in profile.Bindings)
+        //            {
+        //                sb.AppendLine(i1 + binding);
+        //            }
 
-                    sb.AppendLine("end profile");
-                    sb.AppendLine();
-                }
-            }
+        //            sb.AppendLine("end profile");
+        //            sb.AppendLine();
+        //        }
+        //    }
 
-            if (Bindings != null && Bindings.Any())
-            {
-                if (comments)
-                {
-                    sb.AppendLine("# Global command bindings");
-                }
+        //    if (Bindings != null && Bindings.Any())
+        //    {
+        //        if (comments)
+        //        {
+        //            sb.AppendLine("# Global command bindings");
+        //        }
 
-                foreach (var binding in Bindings)
-                {
-                    sb.AppendLine(binding.ToString());
-                }
+        //        foreach (var binding in Bindings)
+        //        {
+        //            sb.AppendLine(binding.ToString());
+        //        }
 
-                sb.AppendLine();
-            }
+        //        sb.AppendLine();
+        //    }
 
-            if (Menus != null && Menus.Any())
-            {
-                if (comments)
-                {
-                    sb.AppendLine("# Menus");
-                }
+        //    if (Menus != null && Menus.Any())
+        //    {
+        //        if (comments)
+        //        {
+        //            sb.AppendLine("# Menus");
+        //        }
 
-                foreach (var menu in Menus)
-                {
-                    sb.AppendLine($"menu \"{Escape(menu.Name)}\"");
-                    if (menu.Help != null)
-                    {
-                        sb.AppendLine(i1 + "help");
-                        if (menu.Help.HelpText != null)
-                        {
-                            sb.AppendLine($"{i2}text = \"{Escape(menu.Help.HelpText)}\"");
-                        }
+        //        foreach (var menu in Menus)
+        //        {
+        //            sb.AppendLine($"menu \"{Escape(menu.Name)}\"");
+        //            if (menu.Help != null)
+        //            {
+        //                sb.AppendLine(i1 + "help");
+        //                if (menu.Help.HelpText != null)
+        //                {
+        //                    sb.AppendLine($"{i2}text = \"{Escape(menu.Help.HelpText)}\"");
+        //                }
 
-                        foreach (var keyHelp in menu.Help.InputHelpTexts)
-                        {
-                            sb.AppendLine($"{i2}{keyHelp.Key} = \"{Escape(keyHelp.Description)}\"");
-                        }
+        //                foreach (var keyHelp in menu.Help.InputHelpTexts)
+        //                {
+        //                    sb.AppendLine($"{i2}{keyHelp.Key} = \"{Escape(keyHelp.Description)}\"");
+        //                }
 
-                        sb.AppendLine(i1 + "end help");
-                    }
+        //                sb.AppendLine(i1 + "end help");
+        //            }
 
-                    if (menu.Pages != null)
-                    {
-                        foreach (var page in menu.Pages)
-                        {
-                            sb.AppendLine(i1 + "page");
-                            if (page.Help != null)
-                            {
-                                sb.AppendLine(i2 + "help");
-                                if (page.Help.HelpText != null)
-                                {
-                                    sb.AppendLine($"{i3}text = \"{Escape(page.Help.HelpText)}\"");
-                                }
+        //            if (menu.Pages != null)
+        //            {
+        //                foreach (var page in menu.Pages)
+        //                {
+        //                    sb.AppendLine(i1 + "page");
+        //                    if (page.Help != null)
+        //                    {
+        //                        sb.AppendLine(i2 + "help");
+        //                        if (page.Help.HelpText != null)
+        //                        {
+        //                            sb.AppendLine($"{i3}text = \"{Escape(page.Help.HelpText)}\"");
+        //                        }
 
-                                foreach (var keyHelp in page.Help.InputHelpTexts)
-                                {
-                                    sb.AppendLine($"{i3}{keyHelp.Key} = \"{Escape(keyHelp.Description)}\"");
-                                }
+        //                        foreach (var keyHelp in page.Help.InputHelpTexts)
+        //                        {
+        //                            sb.AppendLine($"{i3}{keyHelp.Key} = \"{Escape(keyHelp.Description)}\"");
+        //                        }
 
-                                sb.AppendLine(i2 + "end help");
-                            }
+        //                        sb.AppendLine(i2 + "end help");
+        //                    }
 
-                            if (page.Items != null)
-                            {
-                                foreach (var item in page.Items)
-                                {
-                                    sb.AppendLine(i2 + "item");
+        //                    if (page.Items != null)
+        //                    {
+        //                        foreach (var item in page.Items)
+        //                        {
+        //                            sb.AppendLine(i2 + "item");
 
-                                    if (item.Help != null)
-                                    {
-                                        sb.AppendLine(i3 + "help");
-                                        if (item.Help.HelpText != null)
-                                        {
-                                            sb.AppendLine($"{i4}text = \"{Escape(item.Help.HelpText)}\"");
-                                        }
+        //                            if (item.Help != null)
+        //                            {
+        //                                sb.AppendLine(i3 + "help");
+        //                                if (item.Help.HelpText != null)
+        //                                {
+        //                                    sb.AppendLine($"{i4}text = \"{Escape(item.Help.HelpText)}\"");
+        //                                }
 
-                                        foreach (var keyHelp in item.Help.InputHelpTexts)
-                                        {
-                                            sb.AppendLine($"{i4}{keyHelp.Key} = \"{Escape(keyHelp.Description)}\"");
-                                        }
+        //                                foreach (var keyHelp in item.Help.InputHelpTexts)
+        //                                {
+        //                                    sb.AppendLine($"{i4}{keyHelp.Key} = \"{Escape(keyHelp.Description)}\"");
+        //                                }
 
-                                        sb.AppendLine(i3 + "end help");
-                                    }
+        //                                sb.AppendLine(i3 + "end help");
+        //                            }
 
-                                    if (item.Icon != null)
-                                    {
-                                        sb.AppendLine($"{i3}icon = {string.Join(" ", item.Icon.Select(t => t.AsToken))}");
-                                    }
+        //                            if (item.Icon != null)
+        //                            {
+        //                                sb.AppendLine(
+        //                                    $"{i3}icon = {string.Join(" ", item.Icon.Select(t => t.AsToken))}");
+        //                            }
 
-                                    if (item.Name != null)
-                                    {
-                                        sb.AppendLine($"{i3}name = \"{Escape(item.Name)}\"");
-                                    }
+        //                            if (item.Name != null)
+        //                            {
+        //                                sb.AppendLine($"{i3}name = \"{Escape(item.Name)}\"");
+        //                            }
 
-                                    if (item.Text != null)
-                                    {
-                                        sb.AppendLine($"{i3}text = \"{Escape(item.Text)}\"");
-                                    }
+        //                            if (item.Text != null)
+        //                            {
+        //                                sb.AppendLine($"{i3}text = \"{Escape(item.Text)}\"");
+        //                            }
 
-                                    foreach (var binding in item.CommandBindings ?? new CommandBinding[0])
-                                    {
-                                        sb.AppendLine($"{i3}{binding}");
-                                    }
+        //                            foreach (var binding in item.CommandBindings ?? new CommandBinding[0])
+        //                            {
+        //                                sb.AppendLine($"{i3}{binding}");
+        //                            }
 
-                                    sb.AppendLine(i2 + "end item");
-                                }
-                            }
+        //                            sb.AppendLine(i2 + "end item");
+        //                        }
+        //                    }
 
-                            sb.AppendLine(i1 + "end page");
-                        }
-                    }
+        //                    sb.AppendLine(i1 + "end page");
+        //                }
+        //            }
 
-                    sb.AppendLine("end menu");
-                    sb.AppendLine();
-                }
-            }
+        //            sb.AppendLine("end menu");
+        //            sb.AppendLine();
+        //        }
+        //    }
 
-            return sb.ToString();
-        }
+        //    return sb.ToString();
+        //}
 
         private List<ProfileConfiguration> ProfilesWithoutMenu()
         {
@@ -578,7 +603,8 @@ namespace GamepadMapper.Configuration
 
         private string GetPreviousProfile(string currentProfile)
         {
-            var index = ProfilesWithoutMenu().FindIndex(p => string.Equals(p.Name, currentProfile, StringComparison.OrdinalIgnoreCase));
+            var index = ProfilesWithoutMenu()
+                .FindIndex(p => string.Equals(p.Name, currentProfile, StringComparison.OrdinalIgnoreCase));
             if (index == -1)
             {
                 return Profiles.FirstOrDefault()?.Name;
@@ -594,7 +620,8 @@ namespace GamepadMapper.Configuration
 
         private string GetNextProfile(string currentProfile)
         {
-            var index = ProfilesWithoutMenu().FindIndex(p => string.Equals(p.Name, currentProfile, StringComparison.OrdinalIgnoreCase));
+            var index = ProfilesWithoutMenu()
+                .FindIndex(p => string.Equals(p.Name, currentProfile, StringComparison.OrdinalIgnoreCase));
             if (index == -1)
             {
                 return Profiles.FirstOrDefault()?.Name;

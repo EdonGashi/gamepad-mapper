@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using WindowsInput.Native;
+using GamepadMapper.Configuration;
 using GamepadMapper.Input;
 
 namespace GamepadMapper
 {
-    internal class Utils
+    internal static class Utils
     {
         public static List<VirtualKeyCode> ModifiersToKeys(ModifierKeys keys)
         {
@@ -30,6 +31,48 @@ namespace GamepadMapper
             }
 
             return list;
+        }
+
+        public static bool IsCenter(this MenuPosition position)
+        {
+            return position == MenuPosition.TopCenter
+                   || position == MenuPosition.MiddleCenter
+                   || position == MenuPosition.BottomCenter;
+        }
+
+        public static bool IsMiddle(this MenuPosition position)
+        {
+            return position == MenuPosition.MiddleLeft
+                   || position == MenuPosition.MiddleCenter
+                   || position == MenuPosition.MiddleRight;
+        }
+
+        public static bool IsTop(this MenuPosition position)
+        {
+            return position == MenuPosition.TopLeft
+                || position == MenuPosition.TopCenter
+                || position == MenuPosition.TopRight;
+        }
+
+        public static bool IsBottom(this MenuPosition position)
+        {
+            return position == MenuPosition.BottomLeft
+                   || position == MenuPosition.BottomCenter
+                   || position == MenuPosition.BottomRight;
+        }
+
+        public static bool IsLeft(this MenuPosition position)
+        {
+            return position == MenuPosition.TopLeft
+                || position == MenuPosition.MiddleLeft
+                || position == MenuPosition.BottomLeft;
+        }
+
+        public static bool IsRight(this MenuPosition position)
+        {
+            return position == MenuPosition.TopRight
+                   || position == MenuPosition.MiddleRight
+                   || position == MenuPosition.BottomRight;
         }
     }
 }

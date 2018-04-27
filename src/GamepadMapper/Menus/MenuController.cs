@@ -53,13 +53,7 @@ namespace GamepadMapper.Menus
             MenuCollection = new MenuCollection(config.Menus.ToDictionary(m => m.Name, m => Menu.FromConfig(m, actionFactory)));
             GlobalBindings = CommandBindingCollection.FromCollection(config.Bindings, actionFactory);
             menuStack = new Stack<MenuState>();
-        }
-
-        public MenuController(MenuCollection menuCollection, CommandBindingCollection globalBindings)
-        {
-            MenuCollection = menuCollection;
-            GlobalBindings = globalBindings;
-            menuStack = new Stack<MenuState>();
+            Placement = config.Placement;
         }
 
         #region Props
@@ -81,6 +75,8 @@ namespace GamepadMapper.Menus
         public MenuPage CurrentPage => currentPage;
 
         public PageItem CurrentItem => currentItem;
+
+        public MenuPlacementConfiguration Placement { get; }
 
         public double PointerWidth => currentPage != null && currentPage.Items.Count > 1
             ? 360d / currentPage.Items.Count

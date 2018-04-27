@@ -2,7 +2,7 @@
     x:Class="GamepadMapper.Wpf.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Startup="OnAppStartup"
-    Exit="OnAppExit">
+    Exit="OnAppExit"
+    Startup="OnAppStartup">
     <Application.Resources />
 </Application>

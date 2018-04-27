@@ -147,6 +147,11 @@ menu menu_settings
 	    item
 		    name = Menu Position
 		    icon = MoveResizeVariant
+            bind menu_increment = increment(menu.scale)
+            bind menu_decrement = decrement(menu.scale)
+            bind menu_custom_1  = increment(menu.placement)
+            bind menu_custom_2  = reset(menu.placement); reset(menu.scale)
+			bind menu_enter     = command(menu_focus)
 		end item
 	    item
 		    name = Profile

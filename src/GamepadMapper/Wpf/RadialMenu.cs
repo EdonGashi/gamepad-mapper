@@ -45,6 +45,12 @@ namespace GamepadMapper.Wpf
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RadialMenu), new FrameworkPropertyMetadata(typeof(RadialMenu)));
         }
 
+        public static readonly DependencyProperty MenuPositionProperty =
+            DependencyProperty.Register("MenuPosition", 
+                typeof(MenuPosition), 
+                typeof(RadialMenu), 
+                new PropertyMetadata(MenuPosition.BottomRight));
+
         public static readonly DependencyProperty CurrentPageProperty =
             DependencyProperty.Register("CurrentPage", 
                 typeof(MenuPage), 
@@ -98,6 +104,12 @@ namespace GamepadMapper.Wpf
                 typeof(PageItem),
                 typeof(RadialMenu),
                 new PropertyMetadata(null));
+
+        public MenuPosition MenuPosition
+        {
+            get => (MenuPosition)GetValue(MenuPositionProperty);
+            set => SetValue(MenuPositionProperty, value);
+        }
 
         public MenuPage CurrentPage
         {

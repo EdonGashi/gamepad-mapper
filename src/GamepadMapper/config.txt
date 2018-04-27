@@ -26,6 +26,8 @@ menu.minradius      = 50%   # Minimum stick distance to show menu pointer
 menu.smoothing      = 100   # Smoothing sample time
 menu.invertX        = false
 menu.invertY        = false
+menu.placement      = BottomRight
+menu.scale          = 1
 
 # Initial profile
 profile.current     = Default

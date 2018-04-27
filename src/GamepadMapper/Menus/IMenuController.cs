@@ -21,6 +21,8 @@ namespace GamepadMapper.Menus
 
         bool IsOpen { get; }
 
+        MenuPlacementConfiguration Placement { get; }
+
         HelpConfiguration HelpScreen { get; }
 
         HelpConfiguration HelpScreen2 { get; }

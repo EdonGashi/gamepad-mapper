@@ -20,6 +20,7 @@
     <wpf:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
     <wpf:SizeSelectorConverter x:Key="SizeSelectorConverter" />
     <wpf:RadialMarginCalculator x:Key="RadialMarginCalculator" />
+    <wpf:AlignmentConverter x:Key="AlignmentConverter" />
 
     <Style x:Key="RoundWrapper" TargetType="Border">
         <Setter Property="MinWidth" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
@@ -634,28 +635,45 @@
                 <ControlTemplate TargetType="{x:Type wpf:RadialMenu}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <ContentPresenter
                             x:Name="HelpScreen2"
-                            Grid.Row="0"
-                            Grid.Column="1"
+                            Grid.Row="{TemplateBinding MenuPosition,
+                                                       Converter={StaticResource AlignmentConverter},
+                                                       ConverterParameter='h2.row'}"
+                            Grid.Column="{TemplateBinding MenuPosition,
+                                                          Converter={StaticResource AlignmentConverter},
+                                                          ConverterParameter='h2.column'}"
                             MaxWidth="360"
-                            Margin="0,0,0,16"
+                            MaxHeight="344"
+                            Margin="{TemplateBinding MenuPosition,
+                                                     Converter={StaticResource AlignmentConverter},
+                                                     ConverterParameter='h2.margin'}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
+                            VerticalAlignment="{TemplateBinding MenuPosition,
+                                                                Converter={StaticResource AlignmentConverter},
+                                                                ConverterParameter='h2.verticalalignment'}"
                             Content="{TemplateBinding HelpScreen2}"
                             Opacity="0" />
                         <ContentPresenter
                             x:Name="HelpScreen"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            HorizontalAlignment="Right"
+                            Grid.Row="{TemplateBinding MenuPosition,
+                                                       Converter={StaticResource AlignmentConverter},
+                                                       ConverterParameter='h.row'}"
+                            Grid.Column="{TemplateBinding MenuPosition,
+                                                          Converter={StaticResource AlignmentConverter},
+                                                          ConverterParameter='h.column'}"
+                            MaxWidth="352"
+                            MaxHeight="360"
+                            HorizontalAlignment="{TemplateBinding MenuPosition,
+                                                                  Converter={StaticResource AlignmentConverter},
+                                                                  ConverterParameter='h.horizontalalignment'}"
                             VerticalAlignment="Top"
                             Content="{TemplateBinding HelpScreen}"
                             Opacity="0">
@@ -663,13 +681,18 @@
                                 <MultiBinding Converter="{StaticResource RadialMarginCalculator}">
                                     <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
                                     <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="MenuPosition" RelativeSource="{RelativeSource TemplatedParent}" />
                                 </MultiBinding>
                             </ContentPresenter.Margin>
                         </ContentPresenter>
                         <Canvas
                             x:Name="Canvas"
-                            Grid.Row="1"
-                            Grid.Column="1"
+                            Grid.Row="{TemplateBinding MenuPosition,
+                                                       Converter={StaticResource AlignmentConverter},
+                                                       ConverterParameter='menu.row'}"
+                            Grid.Column="{TemplateBinding MenuPosition,
+                                                          Converter={StaticResource AlignmentConverter},
+                                                          ConverterParameter='menu.column'}"
                             Width="360"
                             Height="360"
                             RenderTransformOrigin="0.5,0.5">

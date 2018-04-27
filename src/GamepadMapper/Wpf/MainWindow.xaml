@@ -4,11 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wpf="clr-namespace:GamepadMapper.Wpf"
     xmlns:menus="clr-namespace:GamepadMapper.Menus"
+    xmlns:wpf="clr-namespace:GamepadMapper.Wpf"
     Title="MainWindow"
     Width="525"
     Height="350"
+    d:DataContext="{d:DesignInstance Type=menus:IMenuController,
+                                     d:IsDesignTimeCreatable=False}"
     AllowsTransparency="True"
     Background="Transparent"
     Focusable="False"
@@ -18,21 +20,52 @@
     Topmost="True"
     WindowState="Maximized"
     WindowStyle="None"
-    mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance Type=menus:IMenuController, d:IsDesignTimeCreatable=False}">
-    <Grid Margin="40,60">
-        <wpf:RadialMenu
-            IsOpen="{Binding IsOpen}"
-            PointerAngle="{Binding PointerAngle}"
-            IsPointerVisible="{Binding IsPointerVisible}"
-            HelpScreen="{Binding HelpScreen}"
-            HelpScreen2="{Binding HelpScreen2}"
-            CurrentPage="{Binding CurrentPage}"
-            CurrentItem="{Binding CurrentItem}"
-            PointerWidth="{Binding PointerWidth}"
-            ItemFocused="{Binding ItemFocused}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom" />
+    mc:Ignorable="d">
+    <Window.Resources>
+        <wpf:AlignmentConverter x:Key="AlignmentConverter" />
+        <wpf:ScaleConverter x:Key="ScaleConverter" />
+    </Window.Resources>
+    <Grid>
+        <Viewbox
+            HorizontalAlignment="{Binding Placement.MenuPosition, Converter={StaticResource AlignmentConverter}, ConverterParameter='viewbox.horizontalalignment'}"
+            VerticalAlignment="{Binding Placement.MenuPosition, Converter={StaticResource AlignmentConverter}, ConverterParameter='viewbox.verticalalignment'}"
+            Stretch="Uniform">
+            <Viewbox.Width>
+                <MultiBinding Converter="{StaticResource ScaleConverter}" ConverterParameter="viewbox.width">
+                    <Binding Path="Placement.MenuPosition" />
+                    <Binding Path="Placement.Scale" />
+                </MultiBinding>
+            </Viewbox.Width>
+            <Viewbox.Height>
+                <MultiBinding Converter="{StaticResource ScaleConverter}" ConverterParameter="viewbox.height">
+                    <Binding Path="Placement.MenuPosition" />
+                    <Binding Path="Placement.Scale" />
+                </MultiBinding>
+            </Viewbox.Height>
+            <Viewbox.Margin>
+                <MultiBinding Converter="{StaticResource ScaleConverter}" ConverterParameter="viewbox.margin">
+                    <Binding Path="Placement.MenuPosition" />
+                    <Binding Path="Placement.Scale" />
+                </MultiBinding>
+            </Viewbox.Margin>
+            <Border Width="{Binding Placement.MenuPosition, Converter={StaticResource AlignmentConverter}, ConverterParameter='border.width'}" Height="{Binding Placement.MenuPosition, Converter={StaticResource AlignmentConverter}, ConverterParameter='border.height'}">
+                <wpf:RadialMenu
+                    Width="720"
+                    Height="720"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    CurrentItem="{Binding CurrentItem}"
+                    CurrentPage="{Binding CurrentPage}"
+                    HelpScreen="{Binding HelpScreen}"
+                    HelpScreen2="{Binding HelpScreen2}"
+                    IsOpen="{Binding IsOpen}"
+                    IsPointerVisible="{Binding IsPointerVisible}"
+                    ItemFocused="{Binding ItemFocused}"
+                    MenuPosition="{Binding Placement.MenuPosition}"
+                    PointerAngle="{Binding PointerAngle}"
+                    PointerWidth="{Binding PointerWidth}" />
+            </Border>
+        </Viewbox>
     </Grid>
 </Window>
 

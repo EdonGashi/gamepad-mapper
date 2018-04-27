@@ -633,10 +633,10 @@ namespace GamepadMapper.Configuration.Parsing
                 actions.Add(new KeyAction(keys));
             }
 
-            token0 = PeekToken();
-            if (token0 != null && token0.Value == ";")
+            token1 = PeekToken(1);
+            if (token1 != null && token1.Value == ";")
             {
-                NextToken();
+                NextToken(2);
                 goto parseStart;
             }
 

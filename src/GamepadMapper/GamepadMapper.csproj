@@ -72,6 +72,9 @@
   <ItemGroup>
     <Compile Include="Actuators\SendStringActuator.cs" />
     <Compile Include="Actuators\SendCharacterActuator.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Wpf\ScaleConverter.cs" />
+    <Compile Include="Wpf\AlignmentConverter.cs" />
     <Compile Include="Wpf\IconTemplateSelector.cs" />
     <Compile Include="Wpf\HelpKeyTemplateSelector.cs" />
     <Compile Include="Wpf\IsModConverter.cs" />

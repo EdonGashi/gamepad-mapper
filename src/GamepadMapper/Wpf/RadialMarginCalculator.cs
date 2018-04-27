@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using GamepadMapper.Configuration;
 
 namespace GamepadMapper.Wpf
 {
@@ -16,6 +17,11 @@ namespace GamepadMapper.Wpf
             if (!(values[0] is double actualWidth) || !(values[1] is double actualHeight))
             {
                 return new Thickness();
+            }
+
+            if (values.Length >= 3 && values[2] is MenuPosition position && position.IsLeft())
+            {
+                return new Thickness(8d, 0d, 0d, 0d);
             }
 
             if (actualWidth <= DesiredDistance)
