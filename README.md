@@ -55,3 +55,11 @@ ModBack|Press F, hold BROWSER_REFRESH|F toggles full-screen in Youtube and VLC.
 ModStart|Press WINKEY+E, hold CTRL+SHIFT+ESCAPE|Open explorer/open task manager.
 
 Back+Start combination enables/disables processing input. This gesture cannot be modified in configuration.
+
+# Credits
+
+- [Radial Menu UI](https://dribbble.com/shots/801609-Concept-Idea-Radial-Menu-UI-animated) by Howard Moen for radial menu design.
+- [speps/XInputDotNet](https://github.com/speps/XInputDotNet) for XInput handling.
+- [michaelnoonan/inputsimulator](https://github.com/michaelnoonan/inputsimulator) for keyboard and mouse simulation.
+- [TChatzigiannakis/InputSimulatorPlus](https://github.com/TChatzigiannakis/InputSimulatorPlus) for enhanced version of InputSimulator.
+
