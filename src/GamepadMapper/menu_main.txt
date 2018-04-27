@@ -151,10 +151,10 @@ menu menu_settings
             name = Scrolling
             icon = CursorMove
             bind menu_enter     = command(menu_focus)
-            bind menu_increment = increment(scroll.speed); flashcfg(scroll.speed)
-            bind menu_decrement = decrement(scroll.speed); flashcfg(scroll.speed)
-            bind menu_custom_1  = toggle(scroll.speed); flashcfg(scroll.speed)
-            bind menu_custom_2  = reset(scroll.speed); flashcfg(scroll.speed)
+            bind menu_increment = increment(scroll.speed)
+            bind menu_decrement = decrement(scroll.speed)
+            bind menu_custom_1  = toggle(scroll.speed)
+            bind menu_custom_2  = reset(scroll.speed)
             help
                 $button_increment = Increase speed
                 $button_decrement = Decrease speed
