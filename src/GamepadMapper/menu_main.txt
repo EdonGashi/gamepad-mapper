@@ -1,29 +1,29 @@
 ﻿menu menu_main
     help
-	    LS = Select item
-		RS = mouse
-		DPadHorizontal = Cycle items
-	end help
-	help2
-		LB = Close menu
-	end help2
+        LS = Select item
+        RS = mouse
+        DPadHorizontal = Cycle items
+    end help
+    help2
+        LB = Close menu
+    end help2
     page
-	    item
-		    name = Keyboard
-			icon = Keyboard
-			help
-			    $button_enter = Open keyboard
-			end help
-			bind menu_enter = show(menu_keyboard)
-		end item
-	    item
-		    name = Favorites
-			icon = Star
-			help
-			    $button_enter = Open favorites
-			end help
-			bind menu_enter = show(menu_favorites)
-		end item
+        item
+            name = Keyboard
+            icon = Keyboard
+            help
+                $button_enter = Open keyboard
+            end help
+            bind menu_enter = show(menu_keyboard)
+        end item
+        item
+            name = Favorites
+            icon = Star
+            help
+                $button_enter = Open favorites
+            end help
+            bind menu_enter = show(menu_favorites)
+        end item
         item
             icon                = VolumeHigh
             name                = Volume
@@ -31,172 +31,172 @@
             bind menu_increment = VOLUME_UP
             bind menu_decrement = VOLUME_DOWN
             bind menu_custom_1  = VOLUME_MUTE
-			bind menu_enter     = command(menu_focus)
+            bind menu_enter     = command(menu_focus)
             help
                 $button_increment = Increase
                 $button_decrement = Decrease
                 $button_custom_1  = Mute
-				$button_enter     = Focus
+                $button_enter     = Focus
             end help
         end item
-	    item
-		    name = Settings
-			icon = Settings
-			text = Configure parameters
-			help
-			    $button_enter = Open settings
-			end help
-			bind menu_enter = show(menu_settings)
-		end item
-	end page
+        item
+            name = Settings
+            icon = Settings
+            text = Configure parameters
+            help
+                $button_enter = Open settings
+            end help
+            bind menu_enter = show(menu_settings)
+        end item
+    end page
 end menu
 
 menu menu_favorites
     help
-	    $button_back = Back
-	    LS = Select item
-		RS = mouse
-		DPadHorizontal = Cycle items
-	end help
-	help2
-		LB = Close menu
-	end help2
-	page
-	    item
-			icon = Google
-			name = Google
-			bind menu_enter = run("https://google.com")
-			help
-				$button_enter = Visit google.com
-				$button_back = Back
-			end help
-		end item
-	    item
-			icon = Reddit
-			name = Reddit
-			bind menu_enter = run("https://reddit.com")
-			help
-				$button_enter = Visit reddit.com
-				$button_back = Back
-			end help
-		end item
-	    item
-			icon = Facebook
-			name = Facebook
-			bind menu_enter = run("https://facebook.com")
-			help
-				$button_enter = Visit facebook.com
-				$button_back = Back
-			end help
-		end item
-	    item
-			icon = Twitter
-			name = Twitter
-			bind menu_enter = run("https://twitter.com")
-			help
-				$button_enter = Visit twitter.com
-				$button_back = Back
-			end help
-		end item
-	    item
-			icon = FolderOpen
-			name = File Explorer
-			bind menu_enter = run("explorer")
-			help
-				$button_enter = Open explorer
-				$button_back = Back
-			end help
-		end item
-		item
-			icon = Steam
-			name = Steam
-			bind menu_enter = run("%PROGRAMFILES(X86)%/steam/steam.exe")
-			help
-				$button_enter = Launch Steam
-				$button_back = Back
-			end help
-		end item
-	end page
+        $button_back = Back
+        LS = Select item
+        RS = mouse
+        DPadHorizontal = Cycle items
+    end help
+    help2
+        LB = Close menu
+    end help2
+    page
+        item
+            icon = Google
+            name = Google
+            bind menu_enter = run("https://google.com")
+            help
+                $button_enter = Visit google.com
+                $button_back = Back
+            end help
+        end item
+        item
+            icon = Reddit
+            name = Reddit
+            bind menu_enter = run("https://reddit.com")
+            help
+                $button_enter = Visit reddit.com
+                $button_back = Back
+            end help
+        end item
+        item
+            icon = Facebook
+            name = Facebook
+            bind menu_enter = run("https://facebook.com")
+            help
+                $button_enter = Visit facebook.com
+                $button_back = Back
+            end help
+        end item
+        item
+            icon = Twitter
+            name = Twitter
+            bind menu_enter = run("https://twitter.com")
+            help
+                $button_enter = Visit twitter.com
+                $button_back = Back
+            end help
+        end item
+        item
+            icon = FolderOpen
+            name = File Explorer
+            bind menu_enter = run("explorer")
+            help
+                $button_enter = Open explorer
+                $button_back = Back
+            end help
+        end item
+        item
+            icon = Steam
+            name = Steam
+            bind menu_enter = run("%PROGRAMFILES(X86)%/steam/steam.exe")
+            help
+                $button_enter = Launch Steam
+                $button_back = Back
+            end help
+        end item
+    end page
 end menu
 
 menu menu_settings
     help
-	    $button_back = Back
-	    LS = Select item
-		RS = mouse
-		DPadHorizontal = Cycle items
-	end help
-	help2
-		LB = Close menu
-	end help2
-	page
-	    item
-		    icon = Mouse
-			name = Mouse
-			bind menu_enter     = command(menu_focus)
-			bind menu_increment = increment(mouse.speed)
-			bind menu_decrement = decrement(mouse.speed)
-			bind menu_custom_1  = toggle(mouse.speed)
-			bind menu_custom_2  = reset(mouse.speed)
+        $button_back = Back
+        LS = Select item
+        RS = mouse
+        DPadHorizontal = Cycle items
+    end help
+    help2
+        LB = Close menu
+    end help2
+    page
+        item
+            icon = Mouse
+            name = Mouse
+            bind menu_enter     = command(menu_focus)
+            bind menu_increment = increment(mouse.speed)
+            bind menu_decrement = decrement(mouse.speed)
+            bind menu_custom_1  = toggle(mouse.speed)
+            bind menu_custom_2  = reset(mouse.speed)
             help
                 $button_increment = Increase speed
                 $button_decrement = Decrease speed
                 $button_custom_1  = Toggle speed
-				$button_custom_2  = Reset speed
-				$button_enter     = Focus
-				$button_back      = Back
+                $button_custom_2  = Reset speed
+                $button_enter     = Focus
+                $button_back      = Back
             end help
-		end item
-	    item
-		    name = Scrolling
-		    icon = CursorMove
-			bind menu_enter     = command(menu_focus)
-			bind menu_increment = increment(scroll.speed); flashcfg(scroll.speed)
-			bind menu_decrement = decrement(scroll.speed); flashcfg(scroll.speed)
-			bind menu_custom_1  = toggle(scroll.speed); flashcfg(scroll.speed)
-			bind menu_custom_2  = reset(scroll.speed); flashcfg(scroll.speed)
+        end item
+        item
+            name = Scrolling
+            icon = CursorMove
+            bind menu_enter     = command(menu_focus)
+            bind menu_increment = increment(scroll.speed); flashcfg(scroll.speed)
+            bind menu_decrement = decrement(scroll.speed); flashcfg(scroll.speed)
+            bind menu_custom_1  = toggle(scroll.speed); flashcfg(scroll.speed)
+            bind menu_custom_2  = reset(scroll.speed); flashcfg(scroll.speed)
             help
                 $button_increment = Increase speed
                 $button_decrement = Decrease speed
                 $button_custom_1  = Toggle speed
-				$button_custom_2  = Reset speed
-				$button_enter     = Focus
-				$button_back      = Back
+                $button_custom_2  = Reset speed
+                $button_enter     = Focus
+                $button_back      = Back
             end help
-		end item
-	    item
-		    name = Menu
-		    icon = MoveResizeVariant
+        end item
+        item
+            name = Menu
+            icon = MoveResizeVariant
             bind menu_increment = increment(menu.scale)
             bind menu_decrement = decrement(menu.scale)
             bind menu_custom_1  = increment(menu.placement)
             bind menu_custom_2  = reset(menu.placement); reset(menu.scale)
-			bind menu_enter     = command(menu_focus)
+            bind menu_enter     = command(menu_focus)
             help
                 $button_increment = Increase size
                 $button_decrement = Decrease size
                 $button_custom_1  = Toggle position
-				$button_custom_2  = Reset to default
-				$button_enter     = Focus
-				$button_back      = Back
+                $button_custom_2  = Reset to default
+                $button_enter     = Focus
+                $button_back      = Back
             end help
-		end item
-	    item
-		    name = Profile
-		    icon = Account
+        end item
+        item
+            name = Profile
+            icon = Account
             bind menu_increment = increment(profile.current)
             bind menu_decrement = decrement(profile.current)
             bind menu_custom_1  = toggle(profile.current)
             bind menu_custom_2  = reset(profile.current)
-			bind menu_enter     = command(menu_focus)
+            bind menu_enter     = command(menu_focus)
             help
                 $button_increment = Next profile
                 $button_decrement = Previous profile
                 $button_custom_1  = Next profile
-				$button_custom_2  = Reset profile
-				$button_enter     = Focus
-				$button_back      = Back
+                $button_custom_2  = Reset profile
+                $button_enter     = Focus
+                $button_back      = Back
             end help
-		end item
-	end page
+        end item
+    end page
 end menu
