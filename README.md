@@ -12,16 +12,6 @@
 - [Customizable](https://github.com/EdonGashi/gamepad-mapper/blob/master/src/GamepadMapper/menu_main.txt) radial menu.
 - Radial keyboard built entirely in [config](https://github.com/EdonGashi/gamepad-mapper/blob/master/src/GamepadMapper/menu_keyboard.txt).
 
-Main menu:
-
-![Menu](docs/menu.png)
-
-![Favorites](docs/favorites.png)
-
-Keyboard:
-
-![Keyboard](docs/keyboard.png)
-
 # Default profile
 
 Key|Function|Comment
