@@ -58,6 +58,10 @@ Back+Start combination enables/disables processing input. This gesture cannot be
 
 # Changelog
 
+### v1.0.0-alpha.3
+
+- Allow DLL loading from remote sources
+
 ### v1.0.0-alpha.2
 
 - Configuration values are parsed using invariant culture
