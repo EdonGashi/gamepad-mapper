@@ -20,10 +20,17 @@ namespace GamepadMapper.Wpf
         private static IKernel kernel;
         private static CancellationTokenSource cancellation;
         private static Task loopTask;
+        private static readonly ILogger Logger = new FileLogger();
 
         [STAThread]
         public static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                Logger.WriteLine("=== Critical failure ===");
+                Logger.WriteLine(e.ExceptionObject.ToString());
+            };
+
             appArgs = args ?? new string[0];
             var app = new App();
             app.InitializeComponent();
@@ -41,7 +48,7 @@ namespace GamepadMapper.Wpf
             RootConfiguration config;
             try
             {
-                config = Parser.Parse(configPath);
+                config = Parser.Parse(configPath, Logger);
             }
             catch
             {

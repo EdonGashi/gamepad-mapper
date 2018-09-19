@@ -13,17 +13,23 @@ namespace GamepadMapper.Configuration.Parsing
         {
             using (var logger = new FileLogger())
             {
-                try
-                {
-                    return Parse(new TokenStream(new LineReader(path), new FileReader(), logger), logger);
-                }
-                catch (Exception ex)
-                {
-                    logger.WriteLine($"Error while reading configuration file '{path}'.");
-                    logger.WriteLine(ex.Message);
-                    throw;
-                }
+                return Parse(path, logger);
             }
+        }
+
+        public static RootConfiguration Parse(string path, ILogger logger)
+        {
+            try
+            {
+                return Parse(new TokenStream(new LineReader(path), new FileReader(), logger), logger);
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLine($"Error while reading configuration file '{path}'.");
+                logger.WriteLine(ex.Message);
+                throw;
+            }
+
         }
 
         public static RootConfiguration Parse(ITokenStream stream, ILogger logger)
@@ -77,7 +83,7 @@ namespace GamepadMapper.Configuration.Parsing
 
                         if (token0 == "fps")
                         {
-                            if (double.TryParse(token2, out var fps) && fps >= 1d && fps <= 300d)
+                            if (InvariantDouble.TryParse(token2, out var fps) && fps >= 1d && fps <= 300d)
                             {
                                 config.Fps = fps;
                             }
@@ -792,7 +798,7 @@ namespace GamepadMapper.Configuration.Parsing
                 case "sendstr":
                     return args.Count >= 1 ? new SendStringAction(args[0]) : null;
                 case "setpage":
-                    return args.Count >= 1 && int.TryParse(args[0], out var page) && page > 0
+                    return args.Count >= 1 && InvariantInt.TryParse(args[0], out var page) && page > 0
                         ? new SetPageAction(page)
                         : null;
                 default:

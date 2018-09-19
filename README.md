@@ -56,6 +56,17 @@ ModStart|Press WINKEY+E, hold CTRL+SHIFT+ESCAPE|Open explorer/open task manager.
 
 Back+Start combination enables/disables processing input. This gesture cannot be modified in configuration.
 
+# Changelog
+
+### v1.0.0-alpha.2
+
+- Configuration values are parsed using invariant culture
+- Errors are logged in case of unexpected crashes
+
+### v1.0.0-alpha.1
+
+- Initial test version
+
 # Credits
 
 - [Radial Menu UI](https://dribbble.com/shots/801609-Concept-Idea-Radial-Menu-UI-animated) by Howard Moen for radial menu design.

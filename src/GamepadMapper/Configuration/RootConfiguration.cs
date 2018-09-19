@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GamepadMapper.Configuration.Parsing;
 
 namespace GamepadMapper.Configuration
 {
@@ -23,7 +24,7 @@ namespace GamepadMapper.Configuration
                 divisor = 100d;
             }
 
-            return double.TryParse(value, out var result) && result / divisor > min && result / divisor < max;
+            return InvariantDouble.TryParse(value, out var result) && result / divisor > min && result / divisor < max;
         }
 
         private static double Clamp(string value, double min, double max, double def)
@@ -35,7 +36,7 @@ namespace GamepadMapper.Configuration
                 divisor = 100d;
             }
 
-            return double.TryParse(value, out var result)
+            return InvariantDouble.TryParse(value, out var result)
                 ? Clamp(result / divisor, min, max)
                 : def;
         }
